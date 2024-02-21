@@ -6,7 +6,7 @@ import { Routes } from "../routes";
 import Upgrade from "./Upgrade";
 
 import DashboardOverview from "./dashboard/DashboardOverview";
-import Transactions from "./Transactions";
+import Log from "./Log";
 import Settings from "./Settings";
 import Mapping from "./Mapping";
 
@@ -90,7 +90,7 @@ export default () => (
     {/* pages */}
     <RouteWithSidebar exact path={Routes.DashboardOverview.path} component={DashboardOverview} />
     <RouteWithSidebar exact path={Routes.Upgrade.path} component={Upgrade} />
-    <RouteWithSidebar exact path={Routes.Transactions.path} component={Transactions} />
+    <RouteWithSidebar exact path={Routes.Log.path} component={Log} />
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
     <RouteWithSidebar exact path={Routes.Mapping.path} component={Mapping} />
     

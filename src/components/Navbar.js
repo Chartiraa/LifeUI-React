@@ -1,26 +1,34 @@
 
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faList } from "@fortawesome/free-solid-svg-icons";
-import { Navbar, Container, Button, Col } from '@themesberg/react-bootstrap';
-import { CounterWidget, CircleChartWidget, BarChartWidget, TeamMembersWidget, ProgressTrackWidget, RankingWidget, SalesValueWidget, SalesValueWidgetPhone, AcquisitionWidget } from "Widgets";
-
+import React from "react";
+import { faTemperatureLow, faEyeDropper, faBatteryThreeQuarters, faSignal } from "@fortawesome/free-solid-svg-icons";
+import { Col, Row } from '@themesberg/react-bootstrap';
+import { CounterWidget } from "./Widgets";
+import { ROSMessageReceiver } from "../services/ROSSubscriber";
 
 export default () => {
 
   return (
-    <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
-      <Container fluid className="px-0">
-        <div className="d-flex justify-content-between w-100">
-          <div className="d-flex align-items-center">
-            <Button ><FontAwesomeIcon icon={faList} />
-            </Button>
-            <Col xl={5}>
-            </Col>
+    <>
 
-          </div>
-        </div>
-      </Container>
-    </Navbar>
+      <Row className="justify-content-md-center mt-4">
+
+        <Col className="mb-4">
+          <CounterWidget category="Temperature" title={ROSMessageReceiver("topic_name") + "°"} icon={faTemperatureLow} iconColor="shape-secondary" />
+        </Col>
+
+        <Col className="mb-4">
+          <CounterWidget category="Humidity" title={ROSMessageReceiver("topic_name") + "%"} icon={faEyeDropper} iconColor="shape-secondary" />
+        </Col>
+
+        <Col className="mb-4">
+          <CounterWidget category="Battery" title={ROSMessageReceiver("topic_name") + "%"} icon={faBatteryThreeQuarters} iconColor="shape-secondary" />
+        </Col>
+
+        <Col className="mb-4">
+          <CounterWidget category="ROS Status" title={ROSMessageReceiver("topic_name")} icon={faSignal} iconColor="shape-secondary" />
+        </Col>
+
+      </Row>
+    </>
   );
 };

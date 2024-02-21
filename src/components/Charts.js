@@ -5,8 +5,8 @@ import ChartistTooltip from 'chartist-plugin-tooltips-updated';
 
 export const SalesValueChart = () => {
   const data = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    series: [[1, 2, 2, 3, 3, 4, 3]]
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'asa'],
+    series: [[1, 2, 2, 3, 3, 4, 3, 9]]
   };
 
   const options = {
@@ -19,8 +19,8 @@ export const SalesValueChart = () => {
     },
     axisY: {
       // On the y-axis start means left and end means right
-      showGrid: false,
-      showLabel: false,
+      showGrid: true,
+      showLabel: true,
       labelInterpolationFnc: value => `$${value / 1}k`
     }
   };

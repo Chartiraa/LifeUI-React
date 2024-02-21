@@ -1,36 +1,30 @@
 
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Button, Dropdown, ButtonGroup, Image } from '@themesberg/react-bootstrap';
+import { Col, Row, Image, Container} from '@themesberg/react-bootstrap';
 import Ratio from 'react-bootstrap/Ratio'
+import Driving from "../../components/Driving"
 
 
 export default () => {
 
-  const handleMove = () => (
-    console.log("dsghdg")
-  )
+  const imagePath = process.env.PUBLIC_URL + "/UI Design.jpg";
 
   return (
     <>
-      <Row className="justify-content-md-center mt-5">
-        <Col xs={12} className="mb-4 d-none d-sm-block">
-          <Ratio aspectRatio="16x9">
-            <Image src="../../assets/img/paypal-logo.svg" rounded />
-          </Ratio>
-        </Col>
-        <Col xs={12} className="mb-4 d-sm-none">
-        </Col>
-        <Col xs={12} sm={6} xl={4} className="mb-4">
-        </Col>
+      <Container fluid>
+        <Row className="justify-content-md-center mt-1">
+          <Col className="">
+            <Ratio aspectRatio="16x9">
+              <Image src={imagePath} rounded />
+            </Ratio>
+          </Col>
+          <Col xs lg="2" className="">
+            <Driving></Driving>
+          </Col>
 
-        <Col xs={12} sm={6} xl={4} className="mb-4">
-        </Col>
-
-        <Col xs={12} sm={6} xl={4} className="mb-4">
-        </Col>
-      </Row>
+        </Row>
+      </Container>
 
     </>
   );

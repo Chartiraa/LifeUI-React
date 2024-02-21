@@ -2,7 +2,7 @@
 export const Routes = {
     // pages
     DashboardOverview: { path: "/" },
-    Transactions: { path: "/transactions" },
+    Log: { path: "/log" },
     Settings: { path: "/settings" },
     Mapping: { path: "/mapping"},
     Upgrade: { path: "/upgrade" },

@@ -29,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.17",
+    "@heroicons/react": "v1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -37,6 +38,7 @@
     "chartist": "^0.11.4",
     "chartist-plugin-tooltips-updated": "^0.1.4",
     "moment-timezone": "^0.5.31",
+    "primereact": "^10.5.1",
     "react": "^16.13.1",
     "react-bootstrap": "^2.10.1",
     "react-chartist": "^0.14.4",
@@ -45,12 +47,15 @@
     "react-dom": "^16.13.1",
     "react-github-btn": "^1.2.0",
     "react-live": "^2.2.3",
+    "react-rangeslider": "^2.2.0",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.3.1",
     "react-scripts": "3.4.3",
     "react-transition-group": "^4.4.1",
+    "roslib": "^1.4.1",
     "sass": "^1.50.0",
-    "simplebar-react": "^2.3.0"
+    "simplebar-react": "^2.3.0",
+    "sweetalert2": "^11.10.5"
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start ",
