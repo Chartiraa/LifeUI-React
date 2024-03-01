@@ -6,6 +6,7 @@ import Swal from "sweetalert2"
 import Slider from 'react-rangeslider'
 import "react-rangeslider/lib/index.css"
 
+
 export default () => {
 
     let movementModStatus = false
@@ -82,6 +83,7 @@ export default () => {
                     onChange={(e) => setRangeValue(e)}
                 />
             </div>
+
         </div>
     );
 };

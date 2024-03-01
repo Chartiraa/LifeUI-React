@@ -1,16 +1,40 @@
 import React from "react";
-import {  } from "@fortawesome/react-fontawesome";
-import {  } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Container, Image} from '@themesberg/react-bootstrap';
-import { Ratio } from "react-bootstrap"
+import { } from "@fortawesome/react-fontawesome";
+import { } from '@fortawesome/free-solid-svg-icons';
+import { Col, Button } from '@themesberg/react-bootstrap';
 import { SalesValueWidget, SalesValueWidgetPhone } from "../components/Widgets";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-
+import axios from "axios"
+import { io } from "socket.io-client"
 
 export default () => {
 
-  const imagePath = process.env.PUBLIC_URL + "/UI Design.jpg";
+  const products = [{ name: "Akif", surname: "ozdemir" }]
+  const socket = io("http://localhost:5000/")
+
+  setInterval(() => {
+    
+
+  }, 1000); 
+
+  const handleClick = () => {
+    axios.get('http://localhost:5000/')
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('Hata:', error);
+      });
+
+    axios.post('http://localhost:5000/', products[0])
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('Hata:', error);
+      });
+  }
 
   return (
     <>
@@ -29,19 +53,13 @@ export default () => {
         />
       </Col>
 
-      <Container fluid>
-        <Row className="justify-content-md-center mt-1">
-          <Col className="">
-            <Ratio aspectRatio="16x9">
-              <Image src={imagePath} rounded />
-            </Ratio>
-          </Col>
-          <Col xs lg="2" className="">
-          </Col>
+      <DataTable value={products} stripedRows tableStyle={{ minWidth: '50rem' }}>
+        <Column field="surname" header="Code"></Column>
+        <Column field="name" header="Name"></Column>
 
-        </Row>
-      </Container>
+      </DataTable>
 
+      <Button onClick={handleClick}>asd</Button>
     </>
   );
 };

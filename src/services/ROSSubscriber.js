@@ -3,9 +3,9 @@ import ROSLIB from 'roslib';
 
 export const ROSMessageReceiver = (msgTopic, messageType = 'std_msgs') => {
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(35);
 
-  useEffect(() => {
+  /*useEffect(() => {
     // ROS Bridge bağlantısı kurulur
     const ros = new ROSLIB.Ros({
       url: 'ws://localhost:9090'
@@ -45,7 +45,7 @@ export const ROSMessageReceiver = (msgTopic, messageType = 'std_msgs') => {
     return () => {
       connect.unsubscribe();
     };
-  }, [msgTopic, messageType]);
+  }, [msgTopic, messageType]);*/
 
   return data;
 
