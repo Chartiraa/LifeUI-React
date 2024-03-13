@@ -5,7 +5,6 @@ import { Col, Row, Image, Container} from '@themesberg/react-bootstrap';
 import Ratio from 'react-bootstrap/Ratio'
 import Driving from "../../components/Driving"
 
-
 export default () => {
 
   const imagePath = process.env.PUBLIC_URL + "/UI Design.jpg";
