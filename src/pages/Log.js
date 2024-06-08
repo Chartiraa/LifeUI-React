@@ -1,33 +1,40 @@
 import React from "react";
 import { } from "@fortawesome/react-fontawesome";
 import { } from '@fortawesome/free-solid-svg-icons';
-import { Col, Button } from '@themesberg/react-bootstrap';
-import { SalesValueWidget, SalesValueWidgetPhone } from "../components/Widgets";
+import { Col, Button, Row } from '@themesberg/react-bootstrap';
+import { TemperatureWidget, SalesValueWidgetPhone, HumidityWidget, BatteryWidget } from "../components/Widgets";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { GET, POST} from "../services/Request"
+import { GET, POST } from "../services/Request"
 
 
 export default () => {
 
   const products = [{ name: "Akif", surname: "ozdemir" }]
 
-  const handleClick = () => {
-
-      GET('', "Akif")
-      POST('', "CAn")
-
-  }
-
   return (
     <>
+      <Row className="justify-content-md-center mt-4">
+        <Col xs={12} sm={6} className="mb-4">
+          <TemperatureWidget
+            title="Temperature"
+          />
+        </Col>
+
+        <Col xs={12} sm={6} className="mb-4">
+          <HumidityWidget
+            title="Humidity"
+          />
+        </Col>
+      </Row>
+
       <Col xs={12} className="mb-4 d-none d-sm-block">
-        <SalesValueWidget
-          title="Sales Value"
-          value="10,567"
-          percentage={10.57}
+        <BatteryWidget
+          title="Battery"
         />
       </Col>
+
+
       <Col xs={12} className="mb-4 d-sm-none">
         <SalesValueWidgetPhone
           title="Sales Value"
@@ -37,12 +44,12 @@ export default () => {
       </Col>
 
       <DataTable value={products} stripedRows tableStyle={{ minWidth: '50rem' }}>
+
         <Column field="surname" header="Code"></Column>
         <Column field="name" header="Name"></Column>
 
       </DataTable>
 
-      <Button onClick={handleClick}>asd</Button>
     </>
   );
 };

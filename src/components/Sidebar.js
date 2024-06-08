@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
 import CSALogo from "../assets/img/CSA Logo.svg";
+import { socket } from "../services/socket";
 
 export default () => {
   const location = useLocation();
@@ -65,7 +66,7 @@ export default () => {
               <NavItem title="Mapping" icon={faCog} link={Routes.Mapping.path} />
               <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
 
-              <Button as={Link} to={Routes.Upgrade.path} className="upgrade-to-pro bg-danger"><FontAwesomeIcon icon={faExclamationTriangle} className="me-1" /> Emergancy Stop</Button>
+              <Button onClick={() => socket.emit("Stop", 'Stop')} className="upgrade-to-pro bg-danger"><FontAwesomeIcon icon={faExclamationTriangle} className="me-1" /> Emergancy Stop</Button>
             </Nav>
           </div>
         </SimpleBar>

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import nipplejs from 'nipplejs';
-import { POST } from "../services/Request"
+import { socket } from "../services/socket";
 
 const Joystick = () => {
     const joystickContainer = useRef(null);
@@ -29,7 +29,7 @@ const Joystick = () => {
     }, []); 
 
     useEffect(() => {
-        POST('joystick', joystickData)
+        socket.emit("Joystick", joystickData)
     }, [joystickData])
 
     return <div ref={joystickContainer} style={{ width: '200px', height: '200px' }} />;
