@@ -40,7 +40,7 @@ export default () => {
         </Col>
 
         <Col className="mb-4">
-          <CounterWidget category="ROS Status" title={35} icon={faSignal} iconColor="shape-secondary" />
+          <CounterWidget category="ROS Status" title={'Connected'} icon={faSignal} iconColor="shape-secondary" />
         </Col>
 
       </Row>
