@@ -4,6 +4,7 @@ import { } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Image, Container, Button} from '@themesberg/react-bootstrap';
 import Ratio from 'react-bootstrap/Ratio'
 import Driving from "../../components/Driving"
+import VideoComponent from "../../components/Camera";
 
 export default () => {
 
@@ -14,9 +15,7 @@ export default () => {
       <Container fluid>
         <Row className="justify-content-md-center mt-1">
           <Col className="">
-            <Ratio aspectRatio="16x9">
-              <Image src={imagePath} rounded />
-            </Ratio>
+            <VideoComponent />
           </Col>
           <Col xs lg="2" className="">
             <Driving></Driving>

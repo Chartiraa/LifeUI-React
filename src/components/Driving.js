@@ -6,12 +6,14 @@ import Swal from "sweetalert2"
 import Slider from 'react-rangeslider'
 import "react-rangeslider/lib/index.css"
 import Joystick from "./Joystick";
-import { POST } from "../services/Request"
+import { Button } from "primereact/button"
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+import { socket } from "../services/socket";
 
 
 export default () => {
 
-    let movementModStatus = false
+    const [movementModStatus, setMovementModStatus] = useState(false)
 
     const [movementMod, setMovementMod] = useState('2');
 
@@ -34,28 +36,35 @@ export default () => {
                 if (result.isConfirmed) {
                     Swal.fire("Switched to manual driving!", "", "success");
                     setMovementMod('2')
-                    movementModStatus = false
-                    POST('autonomousState', { state: 'Manuel' })
+                    setMovementModStatus(false)
+                    socket.emit("autonomousState", 'Manuel')
                 }
             });
         }
         else if (movementMod == 2 && e.currentTarget.value == '1') {
             setMovementMod('1')
-            movementModStatus = true
-            POST('autonomousState', { state: 'Autonomous' })
+            setMovementModStatus(true)
+            socket.emit("autonomousState", 'Autonomous')
         }
     }
 
     const sliderChange = (e) => {
-        POST('speedFactor', {factor: e})
+        socket.emit("speedFactor", e)
     }
 
     const turnType = (e) => {
-        POST('turnType', {type: e.target.value})
+        socket.emit("turnType", e.target.value)
     }
 
     const cameraSelect = (e) => {
-        POST('turnType', {type: e.target.value})
+        socket.emit("cameraSelect", e.target.value)
+    }
+    const startDrive = () => {
+        socket.emit("autonomousDrive", 'start')
+    }
+
+    const stopDrive = () => {
+        socket.emit("autonomousDrive", 'stop')
     }
 
     return (
@@ -77,10 +86,11 @@ export default () => {
                     </ToggleButton>
                 ))}
             </ButtonGroup>
+
             <Form.Select className="mt-5" onChange={(e) => cameraSelect(e)}>
-                <option value="1">Front Cam</option>
-                <option value="2">Left Cam</option>
-                <option value="3">Right Cam</option>
+                <option value="Front Cam">Front Cam</option>
+                <option value="Left Cam">Left Cam</option>
+                <option value="Right Cam">Right Cam</option>
             </Form.Select>
             <Form.Select className="mt-2" onChange={(e) => turnType(e)}>
                 <option value="carMod">Car Drive</option>
@@ -90,17 +100,26 @@ export default () => {
                 <option value="centerMod">Center Turn</option>
             </Form.Select>
             <hr className="border border-black border-2 mt-5"></hr>
-            <div className='slider mt-5'>
-                <Slider
-                    min={0}
-                    max={100}
-                    value={rangeValue}
-                    labels={{ 0: 'Slow', 100: 'Fast' }}
-                    onChange={(e) => setRangeValue(e)}
-                    onChangeComplete={() => sliderChange(rangeValue)}
-                />
-            </div>
-            <Joystick />
+            {movementModStatus ? (
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Button onClick={startDrive} severity="success" label="Start Drive" style={{marginRight: '10px', marginBottom: '10px', height: '60px'}}/>
+                    <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{height: '60px'}}/>
+                </div>
+            ) : (
+                <div>
+                    <div className='slider mt-5'>
+                        <Slider
+                            min={0}
+                            max={100}
+                            value={rangeValue}
+                            labels={{ 0: 'Slow', 100: 'Fast' }}
+                            onChange={(e) => setRangeValue(e)}
+                            onChangeComplete={() => sliderChange(rangeValue)}
+                        />
+                    </div>
+                    <Joystick />
+                </div>
+            )}
         </div>
     );
 };
