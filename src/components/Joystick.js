@@ -5,7 +5,13 @@ import { socket } from "../services/socket";
 const Joystick = () => {
     const joystickContainer = useRef(null);
 
-    const [joystickData, setJoystickData] = useState({ x: '0', y: '0' })
+    const [joystickData, setJoystickData] = useState({ x: 0.0, y: 0.0 })
+
+    function ParseFloat(str,val) {
+        str = str.toString();
+        str = str.slice(0, (str.indexOf(".")) + val + 1); 
+        return Number(str);   
+    }
 
     useEffect(() => {
         const manager = nipplejs.create({
@@ -16,11 +22,11 @@ const Joystick = () => {
         });
 
         manager.on('move', (evt, nipple) => {
-            setJoystickData({x: nipple.vector.x.toFixed(2), y: nipple.vector.y.toFixed(2)})
+            setJoystickData({x: ParseFloat(nipple.vector.x,2), y: ParseFloat(nipple.vector.y,2)})
         });
 
         manager.on('end', (evt, nipple) => {
-            setJoystickData({x: '0', y: '0'})
+            setJoystickData({x: 0, y: 0})
         });
 
         return () => {

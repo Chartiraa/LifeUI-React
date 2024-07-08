@@ -1,8 +1,7 @@
 
 import React from "react";
 import { } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Image, Container, Button} from '@themesberg/react-bootstrap';
-import Ratio from 'react-bootstrap/Ratio'
+import { Col, Row, Container} from '@themesberg/react-bootstrap';
 import Driving from "../../components/Driving"
 import VideoComponent from "../../components/Camera";
 
