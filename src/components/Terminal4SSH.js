@@ -1,5 +1,5 @@
 import { socket } from "../services/socket";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Terminal from 'react-terminal-ui';
 import { TerminalOutput, TerminalInput } from 'react-terminal-ui'; // TerminalOutput bileşenini import edin (örnek olarak)
 

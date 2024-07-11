@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { } from '@fortawesome/free-solid-svg-icons';
 import { ButtonGroup, ToggleButton, Form } from '@themesberg/react-bootstrap';
 import Swal from "sweetalert2"
@@ -42,11 +42,29 @@ export default () => {
             });
         }
         else if (movementMod == 2 && e.currentTarget.value == '1') {
-            setMovementMod('1')
-            setMovementModStatus(true)
-            socket.emit("autonomousState", 'Autonomous')
+            Swal.fire({
+                icon: "warning",
+                title: "Autonomous driving mode is turned on. Do you approve?",
+                showDenyButton: true,
+                confirmButtonText: "Confirm",
+                denyButtonText: `Deny`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire("Switched to autonomous driving!", "", "success");
+                    setMovementMod('1')
+                    setMovementModStatus(true)
+                    socket.emit("autonomousState", 'Autonomous')
+                    socket.emit("Joystick", { x: 0.0, y: 0.0 })
+                }
+            });
         }
     }
+
+    useEffect(() => {
+        socket.emit("turnType", "carMod")
+        socket.emit("speedFactor", rangeValue)
+        socket.emit("cameraSelect", 'Front Cam')
+    }, [])
 
     const sliderChange = (e) => {
         socket.emit("speedFactor", e)
@@ -87,27 +105,19 @@ export default () => {
                 ))}
             </ButtonGroup>
 
-            <Form.Select className="mt-5" onChange={(e) => cameraSelect(e)}>
+            <Form.Select className="mt-4" onChange={(e) => cameraSelect(e)}>
                 <option value="Front Cam">Front Cam</option>
                 <option value="Left Cam">Left Cam</option>
                 <option value="Right Cam">Right Cam</option>
             </Form.Select>
-            <Form.Select className="mt-2" onChange={(e) => turnType(e)}>
+            <Form.Select className="mt-2 mb-4" onChange={(e) => turnType(e)}>
                 <option value="carMod">Car Drive</option>
                 <option value="doubleMod">Double Turn</option>
                 <option value="crabMod">Crab Walk</option>
                 <option value="forkliftMod">Forklift Drive</option>
                 <option value="centerMod">Center Turn</option>
             </Form.Select>
-            <hr className="border border-black border-2 mt-5"></hr>
-            {movementModStatus ? (
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Button onClick={startDrive} severity="success" label="Start Drive" style={{marginRight: '10px', marginBottom: '10px', height: '60px'}}/>
-                    <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{height: '60px'}}/>
-                </div>
-            ) : (
-                <div>
-                    <div className='slider mt-5'>
+            <div className='slider mt-3 mb-5'>
                         <Slider
                             min={0}
                             max={100}
@@ -117,6 +127,14 @@ export default () => {
                             onChangeComplete={() => sliderChange(rangeValue)}
                         />
                     </div>
+            <hr className="border border-black border-2 mt-5"></hr>
+            {movementModStatus ? (
+                <div style={{display: 'flex', justifyContent: 'space-between'}} className="mt-4">
+                    <Button onClick={startDrive} severity="success" label="Start Drive" style={{marginRight: '10px', marginBottom: '10px', height: '60px'}}/>
+                    <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{height: '60px'}}/>
+                </div>
+            ) : (
+                <div>
                     <Joystick />
                 </div>
             )}

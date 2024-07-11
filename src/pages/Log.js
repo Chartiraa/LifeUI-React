@@ -1,20 +1,11 @@
 import React from "react";
 import { } from "@fortawesome/react-fontawesome";
 import { } from '@fortawesome/free-solid-svg-icons';
-import { Col, Button, Row } from '@themesberg/react-bootstrap';
+import { Col, Row } from '@themesberg/react-bootstrap';
 import { TemperatureWidget, SalesValueWidgetPhone, HumidityWidget, BatteryWidget } from "../components/Widgets";
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+
 
 export default () => {
-
-  const products = [{ name: "Akif", surname: "ozdemir" }]
-  /*      <DataTable value={products} stripedRows tableStyle={{ minWidth: '50rem' }}>
-
-        <Column field="surname" header="Code"></Column>
-        <Column field="name" header="Name"></Column>
-
-      </DataTable>*/
 
   return (
     <>

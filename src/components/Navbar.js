@@ -7,11 +7,11 @@ import { socket } from "../services/socket";
 
 export default () => {
 
-  const [navbarData, setNavbarData] = useState({ temperature: 'waiting...', humidity: 'waiting...', battery: 'waiting...' });
+  const [navbarData, setNavbarData] = useState({ temperature: 'waiting...', humidity: 'waiting...', battery: 'waiting...', connection: 'waiting...' });
 
   const handleNavbarData = useCallback((data) => {
     setNavbarData((prevData) => {
-      if (prevData.temperature !== data.temperature || prevData.humidity !== data.humidity || prevData.battery !== data.battery) {
+      if (prevData.temperature !== data.temperature || prevData.humidity !== data.humidity || prevData.battery !== data.battery || prevData.connection !== data.connection) {
         return data;
       }
       return prevData;
@@ -40,7 +40,7 @@ export default () => {
         </Col>
 
         <Col className="mb-4">
-          <CounterWidget category="ROS Status" title={'Connected'} icon={faSignal} iconColor="shape-secondary" />
+          <CounterWidget category="ROS Status" title={navbarData.connection} icon={faSignal} iconColor="shape-secondary" />
         </Col>
 
       </Row>

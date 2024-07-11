@@ -295,9 +295,7 @@ export const RankingWidget = () => {
 };
 
 export const TemperatureWidget = (props) => {
-  const { title, value, percentage } = props;
-  const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
-  const percentageColor = percentage < 0 ? "text-danger" : "text-success";
+  const { title } = props;
 
   return (
     <Card className="bg-secondary-alt shadow-sm">
@@ -316,9 +314,7 @@ export const TemperatureWidget = (props) => {
 };
 
 export const HumidityWidget = (props) => {
-  const { title, value, percentage } = props;
-  const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
-  const percentageColor = percentage < 0 ? "text-danger" : "text-success";
+  const { title } = props;
 
   return (
     <Card className="bg-secondary-alt shadow-sm">
@@ -337,9 +333,7 @@ export const HumidityWidget = (props) => {
 };
 
 export const BatteryWidget = (props) => {
-  const { title, value, percentage } = props;
-  const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
-  const percentageColor = percentage < 0 ? "text-danger" : "text-success";
+  const { title } = props;
 
   return (
     <Card className="bg-secondary-alt shadow-sm">
