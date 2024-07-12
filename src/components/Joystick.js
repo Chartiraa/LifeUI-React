@@ -64,7 +64,7 @@ const Joystick = () => {
         });
 
         manager.on('move', (evt, nipple) => {
-            setJoystickData({ x: ParseFloat(nipple.vector.x, 2), y: ParseFloat(nipple.vector.y, 2) })
+            setJoystickData({ x: ParseFloat(nipple.vector.x, 2)*-1, y: ParseFloat(nipple.vector.y*-1, 2) })
         });
 
         manager.on('end', (evt, nipple) => {

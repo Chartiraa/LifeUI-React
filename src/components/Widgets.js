@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faChartArea, faChartBar, faChartLine, faFlagUsa, faFolderOpen, faGlobeEurope, faPaperclip, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faAngular, faBootstrap, faReact, faVuejs } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Card, Image, Button, ListGroup, ProgressBar } from '@themesberg/react-bootstrap';
-import { CircleChart, BarChart, TemperatureChart, SalesValueChartphone, HumidityChart, BatteryChart } from "./Charts";
+import { CircleChart, BarChart, TemperatureChart, SalesValueChartphone, HumidityChart, BatteryChart, LoadChart } from "./Charts";
 
 import Profile1 from "../assets/img/team/profile-picture-1.jpg";
 import ProfileCover from "../assets/img/profile-cover.jpg";
@@ -346,6 +346,25 @@ export const BatteryWidget = (props) => {
       </Card.Header>
       <Card.Body className="p-2">
         <BatteryChart />
+      </Card.Body>
+    </Card>
+  );
+};
+
+export const LoadWidget = (props) => {
+  const { title } = props;
+
+  return (
+    <Card className="bg-secondary-alt shadow-sm">
+      <Card.Header className="d-flex flex-row align-items-center flex-0">
+        <div className="d-block">
+          <h5 className="fw-normal mb-2">
+            {title}
+          </h5>
+        </div>
+      </Card.Header>
+      <Card.Body className="p-2">
+        <LoadChart />
       </Card.Body>
     </Card>
   );

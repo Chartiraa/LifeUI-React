@@ -19,10 +19,24 @@ export default () => {
 
     const [rangeValue, setRangeValue] = useState(30);
 
+    const [plowValue, setPlowValue] = useState(0);
+
     const movementMods = [
         { name: 'Autonomous', value: '1' },
         { name: 'Manuel', value: '2' }
     ];
+
+    function createObject(values) {
+        let obj = {};
+
+        for (let key in values) {
+            if (values.hasOwnProperty(key)) {
+                obj[key] = values[key];
+            }
+        }
+
+        return obj;
+    }
 
     const handleChange = (e) => {
         if (movementMod == 1 && e.currentTarget.value == '2') {
@@ -77,12 +91,22 @@ export default () => {
     const cameraSelect = (e) => {
         socket.emit("cameraSelect", e.target.value)
     }
-    const startDrive = () => {
+    const startDrive = (data) => {
         socket.emit("autonomousDrive", 'start')
     }
 
     const stopDrive = () => {
         socket.emit("autonomousDrive", 'stop')
+    }
+
+    const plowHandler = (data) => {
+        setPlowValue(data)
+        socket.emit("plow", data)
+    }
+
+    const plowComplete = () => {
+        setPlowValue(0)
+        socket.emit("plow", 0)
     }
 
     return (
@@ -122,7 +146,7 @@ export default () => {
                             min={0}
                             max={100}
                             value={rangeValue}
-                            labels={{ 0: 'Slow', 100: 'Fast' }}
+                            labels={{ 0: 'Slow', 50: 'Speed Factor', 100: 'Fast' }}
                             onChange={(e) => setRangeValue(e)}
                             onChangeComplete={() => sliderChange(rangeValue)}
                         />
@@ -136,7 +160,18 @@ export default () => {
             ) : (
                 <div>
                     <Joystick />
+                    <div className='slider mt-3 mb-5'>
+                        <Slider
+                            min={-255}
+                            max={255}
+                            value={plowValue}
+                            labels={{ '-255': 'Close', 0: 'Plowing Arm', 255: 'Open' }}
+                            onChange={(e) => plowHandler(e)}
+                            onChangeComplete={() => plowComplete()}
+                        />
+                    </div>
                 </div>
+
             )}
         </div>
     );

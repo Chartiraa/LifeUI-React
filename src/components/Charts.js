@@ -207,6 +207,68 @@ export const BatteryChart = () => {
   );
 };
 
+export const LoadChart = () => {
+
+  const [loadData, setLoadData] = useState({
+    labels: [],
+    series: [[]]
+  });
+
+  const handleLoadData = useCallback((data) => {
+    console.log(data);
+
+    setLoadData((prevLoadData) => {
+      const newLabels = [...prevLoadData.labels, new Date().toLocaleTimeString()];
+      const newSeries = [...prevLoadData.series[0], data.load];
+
+      if (newLabels.length > 50) {
+        newLabels.shift();
+        newSeries.shift();
+      }
+
+      return {
+        labels: newLabels,
+        series: [newSeries]
+      };
+    });
+  }, []);
+
+
+  useEffect(() => {
+    socket.on('LoadUI', handleLoadData);
+  }, [handleLoadData]);
+
+
+
+  const options = {
+    low: -300000,
+    high: 300000,
+    showArea: true,
+    fullWidth: true,
+    axisX: {
+      position: 'end',
+      showGrid: true
+    },
+    axisY: {
+      // On the y-axis start means left and end means right
+      showGrid: false,
+      showLabel: true,
+      labelInterpolationFnc: value => `${value / 1}`
+    },
+    style: {
+      backgroundColor: 'transparent',
+    }
+  };
+
+  const plugins = [
+    ChartistTooltip()
+  ]
+
+  return (
+    <Chartist data={loadData} options={{ ...options, plugins }} type="Line" className="ct-series-g ct-double-octave" />
+  );
+};
+
 export const SalesValueChartphone = () => {
   const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
