@@ -4,7 +4,7 @@ const VideoComponent = () => {
 
     return (
         <div>
-            <img src="http://127.0.0.1:5003/video_feed" alt='Camera View'/>
+            <img src="http://192.168.1.36:5003/video_feed" alt='Camera View'/>
         </div>
     );
 };

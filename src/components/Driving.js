@@ -81,6 +81,7 @@ export default () => {
     }, [])
 
     const sliderChange = (e) => {
+        setRangeValue(e)
         socket.emit("speedFactor", e)
     }
 
@@ -129,29 +130,17 @@ export default () => {
                 ))}
             </ButtonGroup>
 
-            <Form.Select className="mt-4" onChange={(e) => cameraSelect(e)}>
-                <option value="Front Cam">Front Cam</option>
-                <option value="Left Cam">Left Cam</option>
-                <option value="Right Cam">Right Cam</option>
-            </Form.Select>
-            <Form.Select className="mt-2 mb-4" onChange={(e) => turnType(e)}>
-                <option value="carMod">Car Drive</option>
-                <option value="doubleMod">Double Turn</option>
-                <option value="crabMod">Crab Walk</option>
-                <option value="forkliftMod">Forklift Drive</option>
-                <option value="centerMod">Center Turn</option>
-            </Form.Select>
+            <hr className="border border-black border-2 mt-3"></hr>
+
             <div className='slider mt-3 mb-5'>
                         <Slider
                             min={0}
                             max={100}
                             value={rangeValue}
                             labels={{ 0: 'Slow', 50: 'Speed Factor', 100: 'Fast' }}
-                            onChange={(e) => setRangeValue(e)}
-                            onChangeComplete={() => sliderChange(rangeValue)}
+                            onChange={(e) => sliderChange(e)}
                         />
                     </div>
-            <hr className="border border-black border-2 mt-5"></hr>
             {movementModStatus ? (
                 <div style={{display: 'flex', justifyContent: 'space-between'}} className="mt-4">
                     <Button onClick={startDrive} severity="success" label="Start Drive" style={{marginRight: '10px', marginBottom: '10px', height: '60px'}}/>
@@ -176,3 +165,9 @@ export default () => {
         </div>
     );
 };
+
+/*            <Form.Select className="mt-4" onChange={(e) => cameraSelect(e)}>
+                <option value="Front Cam">Front Cam</option>
+                <option value="Left Cam">Left Cam</option>
+                <option value="Right Cam">Right Cam</option>
+            </Form.Select>*/

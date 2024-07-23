@@ -10,11 +10,25 @@ export default () => {
   return (
     <>
 
-      <Col xs={12} className="mb-4 d-none d-sm-block">
-        <LoadWidget
-          title="Load Graph"
-        />
-      </Col>
+<Row className="justify-content-md-center mt-4">
+<Col xs={12} sm={6} className="mb-4">
+  <TemperatureWidget
+    title="Temperature"
+  />
+</Col>
+
+<Col xs={12} sm={6} className="mb-4">
+  <HumidityWidget
+    title="Humidity"
+  />
+</Col>
+</Row>
+
+<Col xs={12} className="mb-4 d-none d-sm-block">
+<BatteryWidget
+  title="Battery"
+/>
+</Col>
 
       <Col xs={12} className="mb-4 d-sm-none">
         <SalesValueWidgetPhone
