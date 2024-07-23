@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import nipplejs from 'nipplejs';
 import { ButtonGroup, ToggleButton, Form } from '@themesberg/react-bootstrap';
 import { socket } from "../services/socket";
+import Joystickv2 from './Joystickv2';
 
 const Joystick = () => {
     const joystickContainer = useRef(null);
@@ -112,6 +113,7 @@ const Joystick = () => {
             <div ref={joystickContainer} style={{ width: '100%', height: '200px', borderRadius: '10%', marginTop: '35px', backgroundColor: '#1a1a1a' }} >
                 <label style={{ color: 'white', fontSize: '20px', textAlign: 'center', marginTop: '85px' }}>Joystick Area</label>
             </div>
+
         </>
     )
 };

@@ -27,20 +27,20 @@ export default () => {
 
       <Row className="justify-content-md-center mt-4">
 
-        <Col className="mb-4">
-          <CounterWidget category="Temperature" title={navbarData.temperature + "°"} icon={faTemperatureLow} iconColor="shape-secondary" />
+        <Col xs={6} lg={3} className="mb-4">
+          <CounterWidget category="Temp." title={navbarData.temperature + "°"} icon={faTemperatureLow} iconColor="shape-secondary" />
         </Col>
 
-        <Col className="mb-4">
+        <Col xs={6} lg={3} className="mb-4">
           <CounterWidget category="Humidity" title={navbarData.humidity + "%"} icon={faEyeDropper} iconColor="shape-secondary" />
         </Col>
 
-        <Col className="mb-4">
+        <Col xs={6} lg={3} className="mb-4">
           <CounterWidget category="Battery" title={navbarData.battery + "%"} icon={faBatteryThreeQuarters} iconColor="shape-secondary" />
         </Col>
 
-        <Col className="mb-4">
-          <CounterWidget category="ROS Status" title={navbarData.connection} icon={faSignal} iconColor="shape-secondary" />
+        <Col xs={6} lg={3} className="mb-4">
+          <CounterWidget category="ROS" title={navbarData.connection} icon={faSignal} iconColor="shape-secondary" />
         </Col>
 
       </Row>

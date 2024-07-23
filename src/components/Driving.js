@@ -5,7 +5,7 @@ import { ButtonGroup, ToggleButton, Form } from '@themesberg/react-bootstrap';
 import Swal from "sweetalert2"
 import Slider from 'react-rangeslider'
 import "react-rangeslider/lib/index.css"
-import Joystick from "./Joystick";
+import Joystickv2 from "./Joystickv2";
 import { Button } from "primereact/button"
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { socket } from "../services/socket";
@@ -130,25 +130,26 @@ export default () => {
                 ))}
             </ButtonGroup>
 
-            <hr className="border border-black border-2 mt-3"></hr>
+            <div className='slider mt-5 mb-5'>
+                <Slider
+                    min={0}
+                    max={100}
+                    value={rangeValue}
+                    labels={{ 0: 'Slow', 50: 'Speed Factor', 100: 'Fast' }}
+                    onChange={(e) => sliderChange(e)}
+                />
+            </div>
 
-            <div className='slider mt-3 mb-5'>
-                        <Slider
-                            min={0}
-                            max={100}
-                            value={rangeValue}
-                            labels={{ 0: 'Slow', 50: 'Speed Factor', 100: 'Fast' }}
-                            onChange={(e) => sliderChange(e)}
-                        />
-                    </div>
+            <hr className="border border-black border-2 mt-5"></hr>
+
             {movementModStatus ? (
-                <div style={{display: 'flex', justifyContent: 'space-between'}} className="mt-4">
-                    <Button onClick={startDrive} severity="success" label="Start Drive" style={{marginRight: '10px', marginBottom: '10px', height: '60px'}}/>
-                    <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{height: '60px'}}/>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }} className="mt-4">
+                    <Button onClick={startDrive} severity="success" label="Start Drive" style={{ marginRight: '10px', marginBottom: '10px', height: '60px' }} />
+                    <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{ height: '60px' }} />
                 </div>
             ) : (
                 <div>
-                    <Joystick />
+                    <Joystickv2 />
                     <div className='slider mt-3 mb-5'>
                         <Slider
                             min={-255}

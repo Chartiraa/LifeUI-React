@@ -53,6 +53,7 @@
     "react-datetime": "^3.0.4",
     "react-dom": "^16.13.1",
     "react-github-btn": "^1.2.0",
+    "react-joystick-component": "^6.2.1",
     "react-live": "^2.2.3",
     "react-rangeslider": "^2.2.0",
     "react-router-dom": "^5.2.0",
