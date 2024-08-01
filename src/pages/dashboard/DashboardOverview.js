@@ -4,6 +4,7 @@ import { } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Container } from '@themesberg/react-bootstrap';
 import Driving from "../../components/Driving"
 import VideoComponent from "../../components/Camera";
+import VideoStream from "../../components/CameraRTC";
 
 export default () => {
 
@@ -27,7 +28,7 @@ export default () => {
       <Container fluid>
         <Row className="justify-content-md-center mt-1">
           {deviceInfo ? <Col className="">
-            <VideoComponent />
+            <VideoStream />
           </Col> : null}
 
 

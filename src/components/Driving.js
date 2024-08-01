@@ -19,7 +19,7 @@ export default () => {
 
     const [rangeValue, setRangeValue] = useState(30);
 
-    const [plowValue, setPlowValue] = useState(0);
+    const [plowSpeed, setPlowSpeed] = useState(5);
 
     const movementMods = [
         { name: 'Autonomous', value: '1' },
@@ -75,7 +75,7 @@ export default () => {
     }
 
     useEffect(() => {
-        socket.emit("turnType", "carMod")
+        socket.emit("turnType", 'x,z')
         socket.emit("speedFactor", rangeValue)
         socket.emit("cameraSelect", 'Front Cam')
     }, [])
@@ -93,25 +93,30 @@ export default () => {
         socket.emit("cameraSelect", e.target.value)
     }
     const startDrive = (data) => {
-        socket.emit("autonomousDrive", 'start')
+        socket.broadcast.emit("autonomousDrive", 'start')
     }
 
     const stopDrive = () => {
         socket.emit("autonomousDrive", 'stop')
     }
 
-    const plowHandler = (data) => {
-        setPlowValue(data)
-        socket.emit("plow", data)
+    const plowSpeedHandler = (data) => {
+        if (plowSpeed != data) {
+            setPlowSpeed(data)
+        }
     }
 
-    const plowComplete = () => {
-        setPlowValue(0)
-        socket.emit("plow", 0)
+    const plowArmUp = () => {
+        socket.emit("plowArm", -25.5 * plowSpeed)
+        console.log(-2.55 * plowSpeed)
+    }
+
+    const plowArmDown = () => {
+        socket.emit("plowArm", 25.5 * plowSpeed)
     }
 
     return (
-        <div className="text-center">
+        <div className="text-center" style={{ height: '100%' }}>
 
             <ButtonGroup>
                 {movementMods.map((radio, idx) => (
@@ -150,15 +155,19 @@ export default () => {
             ) : (
                 <div>
                     <Joystickv2 />
-                    <div className='slider mt-3 mb-5'>
+                    <div className='slider mb-5'>
+                        <label className="mt-1">Plow Arm Speed</label>
                         <Slider
-                            min={-255}
-                            max={255}
-                            value={plowValue}
-                            labels={{ '-255': 'Close', 0: 'Plowing Arm', 255: 'Open' }}
-                            onChange={(e) => plowHandler(e)}
-                            onChangeComplete={() => plowComplete()}
+                            min={0}
+                            max={10}
+                            value={plowSpeed}
+                            labels={{ '0': 'Slow', 10: 'Fast' }}
+                            onChange={(e) => plowSpeedHandler(e)}
                         />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '50px' }}>
+                            <Button onClick={plowArmUp} severity="success" label="Up" style={{ marginRight: '10px', marginBottom: '10px', height: '60px', width: '100px' }} />
+                            <Button onClick={plowArmDown} severity="warning" label="Down" style={{ height: '60px', width: '100px' }} />
+                        </div>
                     </div>
                 </div>
 

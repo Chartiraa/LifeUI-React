@@ -59,7 +59,7 @@ export default function Joystickv2() {
             let dynamicObject = createObject(conditions);
             socket.emit("Joystick", dynamicObject)
         } else if (joystickAxis[0] == "x" && joystickAxis[1] == "z") {
-            let conditions = { x: joystickData.x, z: ParseFloat(joystickData.y * 0.1, 2) }
+            let conditions = { x: joystickData.x, z: joystickData.y }
             let dynamicObject = createObject(conditions);
             socket.emit("Joystick", dynamicObject)
         } else if (joystickAxis[0] == "y" && joystickAxis[1] == "z") {
