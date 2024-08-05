@@ -17,9 +17,9 @@ export default () => {
 
     const [movementMod, setMovementMod] = useState('2');
 
-    const [rangeValue, setRangeValue] = useState(30);
+    const [rangeValue, setRangeValue] = useState(20);
 
-    const [plowSpeed, setPlowSpeed] = useState(5);
+    const [plowSpeed, setPlowSpeed] = useState(0);
 
     const movementMods = [
         { name: 'Autonomous', value: '1' },
@@ -93,26 +93,18 @@ export default () => {
         socket.emit("cameraSelect", e.target.value)
     }
     const startDrive = (data) => {
-        socket.broadcast.emit("autonomousDrive", 'start')
+        socket.emit("autonomousDrive", 'start')
     }
 
     const stopDrive = () => {
         socket.emit("autonomousDrive", 'stop')
     }
 
-    const plowSpeedHandler = (data) => {
+    const plowController = (data) => {
         if (plowSpeed != data) {
             setPlowSpeed(data)
+            socket.emit("plow", data*25.5)
         }
-    }
-
-    const plowArmUp = () => {
-        socket.emit("plowArm", -25.5 * plowSpeed)
-        console.log(-2.55 * plowSpeed)
-    }
-
-    const plowArmDown = () => {
-        socket.emit("plowArm", 25.5 * plowSpeed)
     }
 
     return (
@@ -158,16 +150,13 @@ export default () => {
                     <div className='slider mb-5'>
                         <label className="mt-1">Plow Arm Speed</label>
                         <Slider
-                            min={0}
+                            min={-10}
                             max={10}
                             value={plowSpeed}
-                            labels={{ '0': 'Slow', 10: 'Fast' }}
-                            onChange={(e) => plowSpeedHandler(e)}
+                            labels={{ '-10': 'Open', 10: 'Close' }}
+                            onChange={(e) => plowController(e)}
+                            onChangeComplete={() => plowController(0)}
                         />
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '50px' }}>
-                            <Button onClick={plowArmUp} severity="success" label="Up" style={{ marginRight: '10px', marginBottom: '10px', height: '60px', width: '100px' }} />
-                            <Button onClick={plowArmDown} severity="warning" label="Down" style={{ height: '60px', width: '100px' }} />
-                        </div>
                     </div>
                 </div>
 
