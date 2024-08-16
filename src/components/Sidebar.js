@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faChartPie, faCog, faHandHoldingUsd} from "@fortawesome/free-solid-svg-icons";
+import { faExclamationTriangle, faChartPie, faCog, faMapMarked, faDatabase } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -62,8 +62,8 @@ export default () => {
               <Dropdown.Divider className="my-3 border-indigo" />
 
               <NavItem title="Control Panel" link={Routes.DashboardOverview.path} icon={faChartPie} />
-              <NavItem title="Log Page" icon={faHandHoldingUsd} link={Routes.Log.path} />
-              <NavItem title="Mapping" icon={faCog} link={Routes.Mapping.path} />
+              <NavItem title="Log Page" icon={faDatabase} link={Routes.Log.path} />
+              <NavItem title="Mapping" icon={faMapMarked} link={Routes.Mapping.path} />
               <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
 
               <Button onClick={() => socket.emit("Stop", 'Stop')} className="upgrade-to-pro bg-danger"><FontAwesomeIcon icon={faExclamationTriangle} className="me-1" /> Emergancy Stop</Button>

@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { } from '@fortawesome/free-solid-svg-icons';
-import { ButtonGroup, ToggleButton, Form } from '@themesberg/react-bootstrap';
+import { ButtonGroup, ToggleButton } from '@themesberg/react-bootstrap';
 import Swal from "sweetalert2"
 import Slider from 'react-rangeslider'
 import "react-rangeslider/lib/index.css"
@@ -25,18 +25,6 @@ export default () => {
         { name: 'Autonomous', value: '1' },
         { name: 'Manuel', value: '2' }
     ];
-
-    function createObject(values) {
-        let obj = {};
-
-        for (let key in values) {
-            if (values.hasOwnProperty(key)) {
-                obj[key] = values[key];
-            }
-        }
-
-        return obj;
-    }
 
     const handleChange = (e) => {
         if (movementMod == 1 && e.currentTarget.value == '2') {
@@ -85,13 +73,6 @@ export default () => {
         socket.emit("speedFactor", e)
     }
 
-    const turnType = (e) => {
-        socket.emit("turnType", e.target.value)
-    }
-
-    const cameraSelect = (e) => {
-        socket.emit("cameraSelect", e.target.value)
-    }
     const startDrive = (data) => {
         socket.emit("autonomousDrive", 'start')
     }
@@ -101,7 +82,7 @@ export default () => {
     }
 
     const plowController = (data) => {
-        if (plowSpeed != data) {
+        if (plowSpeed !== data) {
             setPlowSpeed(data)
             socket.emit("plow", data*25.5)
         }

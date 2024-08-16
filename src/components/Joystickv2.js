@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Joystick } from 'react-joystick-component';
-import { ButtonGroup, ToggleButton, Form } from '@themesberg/react-bootstrap';
+import { Form } from '@themesberg/react-bootstrap';
 import { socket } from "../services/socket";
 
 export default function Joystickv2() {

@@ -2,12 +2,11 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEye, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Form, Card, Image, Button, Container, InputGroup } from '@themesberg/react-bootstrap';
+import { Col, Row, Form, Card, Button, Container, InputGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
-import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 
 export default () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,9 +30,6 @@ export default () => {
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="bg-white shadow-soft border border-light rounded p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
-                  <div className="user-avatar large-avatar mx-auto mb-3 border-dark p-2">
-                    <Image src={Profile3} className="rounded-circle" />
-                  </div>
                   <h3 className="mb-3">Bonnie Green</h3>
                   <p className="text-gray">Better to be safe than sorry.</p>
                 </div>

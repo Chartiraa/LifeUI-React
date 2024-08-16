@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Container } from '@themesberg/react-bootstrap';
-import Driving from "../../components/Driving"
-import VideoComponent from "../../components/Camera";
-import VideoStream from "../../components/CameraRTC";
+import Driving from "../components/Driving"
+import VideoStream from "../components/CameraRTC";
 
 export default () => {
 

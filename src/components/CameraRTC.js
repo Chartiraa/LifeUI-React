@@ -3,9 +3,9 @@ import React from 'react';
 function VideoStream() {
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '80vh', border: 'none' }}>
       <iframe
-        src="http://192.168.1.19:8080/"
+        src="http://10.116.62.91:8080/"
         style={{ width: '100%', height: '100%', border: 'none' }}
         title="Site"
       />

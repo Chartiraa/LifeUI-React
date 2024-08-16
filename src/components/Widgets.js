@@ -6,7 +6,6 @@ import { faAngular, faBootstrap, faReact, faVuejs } from "@fortawesome/free-bran
 import { Col, Row, Card, Image, Button, ListGroup, ProgressBar } from '@themesberg/react-bootstrap';
 import { CircleChart, BarChart, TemperatureChart, SalesValueChartphone, HumidityChart, BatteryChart, LoadChart } from "./Charts";
 
-import Profile1 from "../assets/img/team/profile-picture-1.jpg";
 import ProfileCover from "../assets/img/profile-cover.jpg";
 
 import teamMembers from "../data/teamMembers";
@@ -17,7 +16,6 @@ export const ProfileCardWidget = () => {
     <Card border="light" className="text-center p-0 mb-4">
       <div style={{ backgroundImage: `url(${ProfileCover})` }} className="profile-cover rounded-top" />
       <Card.Body className="pb-5">
-        <Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />
         <Card.Title>Neil Sims</Card.Title>
         <Card.Subtitle className="fw-normal">Senior Software Engineer</Card.Subtitle>
         <Card.Text className="text-gray mb-4">New York, USA</Card.Text>

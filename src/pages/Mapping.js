@@ -1,21 +1,51 @@
+import React, { useEffect, useState } from 'react';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { socket } from '../services/socket';
 
-import React from "react";
-import { } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Container } from '@themesberg/react-bootstrap';
-import VideoComponent from "../components/Camera";
+const MapComponent = () => {
+  const [currentPosition, setCurrentPosition] = useState({ lat: 0, lng: 0 });
+  const [loading, setLoading] = useState(true);
 
+  const mapStyles = {
+    height: "80vh",
+    width: "100%"
+  };
 
-export default () => {
+  const defaultCenter = {
+    lat: 41.0082, // İstanbul'un enlemi
+    lng: 28.9784 // İstanbul'un boylamı
+  };
+
+  useEffect(() => {
+    // Socket.IO'dan gelen GPS verilerini dinle
+    socket.on('GPS', (data) => {
+      const { latitude, longitude, altitude } = data;
+      setCurrentPosition({
+        lat: latitude,
+        lng: longitude
+      });
+      setLoading(false);
+    });
+
+    // Component unmount olduğunda Socket.IO bağlantısını temizle
+    return () => {
+      socket.off('GPS');
+    };
+  }, []);
 
   return (
-    <>
-      <Container fluid>
-        <Row className="justify-content-md-center mt-1">
-          <Col className="">
-            <VideoComponent />
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <LoadScript googleMapsApiKey="AIzaSyCTZ0owcy1IZu2PcBw7VMbdDrioIcZkdoo">
+      <GoogleMap
+        mapContainerStyle={mapStyles}
+        zoom={18}
+        center={loading ? defaultCenter : currentPosition}
+      >
+        {!loading && (
+          <Marker position={currentPosition} />
+        )}
+      </GoogleMap>
+    </LoadScript>
   );
 };
+
+export default MapComponent;
