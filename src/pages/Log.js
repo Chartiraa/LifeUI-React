@@ -10,6 +10,8 @@ export default () => {
   return (
     <>
 
+      <h1 style={{ marginTop: "20px" }}>Veriler</h1>
+
       <Row className="justify-content-md-center mt-4">
         <Col xs={12} sm={6} className="mb-4">
           <TemperatureWidget

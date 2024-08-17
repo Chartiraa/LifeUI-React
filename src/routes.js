@@ -3,6 +3,7 @@ export const Routes = {
     // pages
     test: { path: "/test" },
     DashboardOverview: { path: "/" },
+    Cameras: { path: "/cameras" },
     Log: { path: "/log" },
     Settings: { path: "/settings" },
     Mapping: { path: "/mapping" },

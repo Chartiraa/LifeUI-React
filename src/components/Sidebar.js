@@ -4,12 +4,12 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faChartPie, faCog, faMapMarked, faDatabase } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationTriangle, faChartPie, faCog, faMapMarked, faDatabase, faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
-import CSALogo from "../assets/img/CSA Logo.svg";
+import Logo from "../assets/img/Tatek.svg";
 import { socket } from "../services/socket";
 
 export default () => {
@@ -21,8 +21,26 @@ export default () => {
   const onCollapse = () => setShow(!show);
 
   const NavItem = (props) => {
-    const { title, link, external, target, icon, image, badgeText, badgeBg = "secondary", badgeColor = "primary" } = props;
-    const classNames = badgeText ? "d-flex justify-content-start align-items-center justify-content-between" : "";
+    const { title, link, external, target, icon } = props;
+    const classNames = "d-flex justify-content-between"
+    const navItemClassName = link === pathname ? "active" : "";
+    const linkProps = external ? { href: link } : { as: Link, to: link };
+
+    return (
+      <Nav.Item className={navItemClassName} onClick={() => setShow(false)}>
+        <Nav.Link {...linkProps} target={target} style={{ display: 'flex', justifyContent: 'space-between' }} >
+          <span>
+            {icon ? <span className="sidebar-icon"><FontAwesomeIcon icon={icon} /> </span> : null}
+            <p style={{ display: 'inline', fontSize: "1.3rem" }}>{title}</p>
+          </span>
+        </Nav.Link>
+      </Nav.Item>
+    );
+  };
+
+  const LogoNavItem = (props) => {
+    const { link, external, target, image, badgeText } = props;
+    const classNames = "d-flex justify-content-center align-items-center"
     const navItemClassName = link === pathname ? "active" : "";
     const linkProps = external ? { href: link } : { as: Link, to: link };
 
@@ -30,14 +48,8 @@ export default () => {
       <Nav.Item className={navItemClassName} onClick={() => setShow(false)}>
         <Nav.Link {...linkProps} target={target} className={classNames}>
           <span>
-            {icon ? <span className="sidebar-icon"><FontAwesomeIcon icon={icon} /> </span> : null}
-            {image ? <Image src={image} width={20} height={20} className="sidebar-icon svg-icon" /> : null}
-
-            <span className="sidebar-text">{title}</span>
+            <Image src={image} width={120} height={120} className="sidebar-icon svg-icon" style={{ marginLeft: '12px', marginBottom: '10px' }} />
           </span>
-          {badgeText ? (
-            <Badge pill bg={badgeBg} text={badgeColor} className="badge-md notification-count ms-2">{badgeText}</Badge>
-          ) : null}
         </Nav.Link>
       </Nav.Item>
     );
@@ -47,7 +59,7 @@ export default () => {
     <>
       <Navbar expand={false} collapseOnSelect variant="dark" className="navbar-theme-primary px-4 d-md-none">
         <Navbar.Brand className="me-lg-5" as={Link} to={Routes.DashboardOverview.path}>
-          <Image src={CSALogo} className="navbar-brand-light" />
+          <Image src={Logo} className="navbar-brand-light" />
         </Navbar.Brand>
         <Navbar.Toggle as={Button} aria-controls="main-navbar" onClick={onCollapse}>
           <span className="navbar-toggler-icon" />
@@ -57,16 +69,17 @@ export default () => {
         <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`}>
           <div className="sidebar-inner px-4 pt-3">
             <Nav className="flex-column pt-3 pt-md-0">
-              <NavItem title="CSA Robotics - Life UI" link={Routes.DashboardOverview} image={CSALogo} />
+              <LogoNavItem title="TatekBOT" link={Routes.DashboardOverview} image={Logo} />
 
-              <Dropdown.Divider className="my-3 border-indigo" />
+              <Dropdown.Divider className=" border-indigo" />
 
-              <NavItem title="Control Panel" link={Routes.DashboardOverview.path} icon={faChartPie} />
-              <NavItem title="Log Page" icon={faDatabase} link={Routes.Log.path} />
-              <NavItem title="Mapping" icon={faMapMarked} link={Routes.Mapping.path} />
-              <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
+              <NavItem title="Kontrol Paneli" link={Routes.DashboardOverview.path} icon={faChartPie} />
+              <NavItem title="Kameralar" icon={faCamera} link={Routes.Cameras.path} />
+              <NavItem title="Veriler" icon={faDatabase} link={Routes.Log.path} />
+              <NavItem title="Harita" icon={faMapMarked} link={Routes.Mapping.path} />
+              <NavItem title="Ayarlar" icon={faCog} link={Routes.Settings.path} />
 
-              <Button onClick={() => socket.emit("Stop", 'Stop')} className="upgrade-to-pro bg-danger"><FontAwesomeIcon icon={faExclamationTriangle} className="me-1" /> Emergancy Stop</Button>
+              <Button onClick={() => socket.emit("Stop", 'Stop')} className="upgrade-to-pro bg-danger"><FontAwesomeIcon icon={faExclamationTriangle} className="me-1" />Acil Stop</Button>
             </Nav>
           </div>
         </SimpleBar>

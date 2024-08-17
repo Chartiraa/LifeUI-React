@@ -7,6 +7,7 @@ import Upgrade from "./Upgrade";
 
 import test from "./test";
 import Dashboard from "./Dashboard";
+import Cameras from "./Cameras";
 import Log from "./Log";
 import Settings from "./Settings";
 import Mapping from "./Mapping";
@@ -60,7 +61,6 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
         {/*<Preloader show={loaded ? false : true} />*/}
         <Sidebar />
         <main className="content">
-          <Navbar />
           <Component {...props} />
         </main>
       </>
@@ -80,6 +80,7 @@ export default () => (
     {/* pages */}
     <RouteWithSidebar exact path={Routes.test.path} component={test} />
     <RouteWithSidebar exact path={Routes.DashboardOverview.path} component={Dashboard} />
+    <RouteWithSidebar exact path={Routes.Cameras.path} component={Cameras} />
     <RouteWithSidebar exact path={Routes.Upgrade.path} component={Upgrade} />
     <RouteWithSidebar exact path={Routes.Log.path} component={Log} />
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />

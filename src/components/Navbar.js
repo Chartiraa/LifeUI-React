@@ -1,8 +1,5 @@
 
 import React, { useState, useEffect, useCallback } from "react";
-import { faTemperatureLow, faEyeDropper, faBatteryThreeQuarters, faSignal } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row } from '@themesberg/react-bootstrap';
-import { CounterWidget } from "./Widgets";
 import { socket } from "../services/socket";
 
 export default () => {
@@ -23,27 +20,20 @@ export default () => {
   }, [handleNavbarData]);
 
   return (
-    <>
+    <div style={{ marginTop: "20px", marginBottom: "20px", display: "flex", justifyContent: "end" }}>
+      <div style={{ padding: "10px" }}>
+        <p style={{ display: "inline", color: "#E4003A", fontWeight: "bold" }}>Sıcaklık: </p>
+        <p style={{ display: "inline", marginRight: "10px" }}>{navbarData.temperature + "°"}</p>
 
-      <Row className="justify-content-md-center mt-4">
+        <p style={{ display: "inline", color: "#4535C1", fontWeight: "bold" }}>Nem: </p>
+        <p style={{ display: "inline", marginRight: "10px" }}>{navbarData.humidity + "%"}</p>
 
-        <Col xs={6} lg={3} className="mb-4">
-          <CounterWidget category="Temp." title={navbarData.temperature + "°"} icon={faTemperatureLow} iconColor="shape-secondary" />
-        </Col>
+        <p style={{ display: "inline", color: "#508D4E", fontWeight: "bold" }}>Batarya: </p>
+        <p style={{ display: "inline", marginRight: "10px" }}>{navbarData.battery + "%"}</p>
 
-        <Col xs={6} lg={3} className="mb-4">
-          <CounterWidget category="Humidity" title={navbarData.humidity + "%"} icon={faEyeDropper} iconColor="shape-secondary" />
-        </Col>
-
-        <Col xs={6} lg={3} className="mb-4">
-          <CounterWidget category="Battery" title={navbarData.battery + "%"} icon={faBatteryThreeQuarters} iconColor="shape-secondary" />
-        </Col>
-
-        <Col xs={6} lg={3} className="mb-4">
-          <CounterWidget category="ROS" title={navbarData.connection} icon={faSignal} iconColor="shape-secondary" />
-        </Col>
-
-      </Row>
-    </>
+        <p style={{ display: "inline", color: "#E76F51", fontWeight: "bold" }}>Bağlantı:</p>
+        <p style={{ display: "inline", marginRight: "10px" }}>{navbarData.connection}</p>
+      </div>
+    </div>
   );
 };
