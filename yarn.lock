@@ -9526,7 +9526,7 @@ pretty-format@^27.0.2:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
-primereact@^10.5.1:
+primereact@^10.8.2:
   version "10.8.2"
   resolved "https://registry.yarnpkg.com/primereact/-/primereact-10.8.2.tgz#6cd56c65f95a79aeaaa11c1efa1a1da797021e45"
   integrity sha512-bf7vktogGh0PmKT9WLDcJQoQNqqFqcAlP2crUqccnlTu63FNnQV82qEYyaFvE12Qd5qhm3EYmpsHjpf6/+olTQ==

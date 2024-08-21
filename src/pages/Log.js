@@ -3,7 +3,7 @@ import { } from "@fortawesome/react-fontawesome";
 import { } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from '@themesberg/react-bootstrap';
 import { TemperatureWidget, HumidityWidget, BatteryWidget } from "../components/Widgets";
-
+import { socket } from "../services/socket";
 
 export default () => {
 
@@ -29,6 +29,11 @@ export default () => {
           title="Battery"
         />
       </Col>
+
+      <h2>{() => socket.on('initX', (data) => data)}</h2>
+      <h2>{() => socket.on('depth', (data) => data)}</h2>
+
+
     </>
   );
 };

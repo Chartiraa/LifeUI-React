@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { } from '@fortawesome/free-solid-svg-icons';
-import { ButtonGroup, ToggleButton } from '@themesberg/react-bootstrap';
+import { ButtonGroup, ToggleButton, Form } from '@themesberg/react-bootstrap';
 import Swal from "sweetalert2"
 import Slider from 'react-rangeslider'
 import "react-rangeslider/lib/index.css"
@@ -20,6 +20,20 @@ export default () => {
     const [rangeValue, setRangeValue] = useState(20);
 
     const [plowSpeed, setPlowSpeed] = useState(0);
+
+    const [lifeWidth, setLifeWidth] = useState(120);
+
+    const [lifeHeight, setLifeHeight] = useState(120);
+
+    const [gpsPosX, setGpsPosX] = useState(50);
+
+    const [gpsPosY, setGpsPosY] = useState(40);
+
+    const [turnRadius, setTurnRadius] = useState(50);
+
+    const [initX, setInitX] = useState(5);
+
+    const [depthThreshold, setDepthThreshold] = useState(50);
 
     const movementMods = [
         { name: 'Autonomous', value: '1' },
@@ -66,7 +80,37 @@ export default () => {
         socket.emit("turnType", 'x,z')
         socket.emit("speedFactor", rangeValue)
         socket.emit("cameraSelect", 'Front Cam')
+        socket.emit("initX", initX)
+        socket.emit("depthThreshold", depthThreshold)
     }, [])
+
+    useEffect(() => {
+        socket.emit("initX", initX)
+    }, [initX])
+
+    useEffect(() => {
+        socket.emit("depth", depthThreshold)
+    }, [depthThreshold])
+
+    useEffect(() => {
+        socket.emit("lifeHeight", lifeHeight)
+    }, [lifeHeight])
+
+    useEffect(() => {
+        socket.emit("lifeWidth", lifeWidth)
+    }, [lifeWidth])
+
+    useEffect(() => {
+        socket.emit("gpsPosY", gpsPosY)
+    }, [gpsPosY])
+
+    useEffect(() => {
+        socket.emit("gpsPosX", gpsPosX)
+    }, [gpsPosX])
+
+    useEffect(() => {
+        socket.emit("turnRadius", turnRadius)
+    }, [turnRadius])
 
     const sliderChange = (e) => {
         setRangeValue(e)
@@ -84,7 +128,7 @@ export default () => {
     const plowController = (data) => {
         if (plowSpeed !== data) {
             setPlowSpeed(data)
-            socket.emit("plow", data*25.5)
+            socket.emit("plow", data * 25.5)
         }
     }
 
@@ -121,10 +165,26 @@ export default () => {
             <hr className="border border-black border-2 mt-5"></hr>
 
             {movementModStatus ? (
-                <div style={{ display: 'flex', justifyContent: 'space-between' }} className="mt-4">
-                    <Button onClick={startDrive} severity="success" label="Start Drive" style={{ marginRight: '10px', marginBottom: '10px', height: '60px' }} />
-                    <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{ height: '60px' }} />
-                </div>
+                <>
+                    <Form.Label>Life Width</Form.Label>
+                    <Form.Control required type="text" value={lifeWidth} placeholder="Life Width" onChange={(e) => setLifeWidth(e.target.value)} style={{ marginBottom: '10px' }} />
+                    <Form.Label>Life Height</Form.Label>
+                    <Form.Control required type="text" value={lifeHeight} placeholder="Life Height" onChange={(e) => setLifeHeight(e.target.value)} style={{ marginBottom: '10px' }} />
+                    <Form.Label>GPS PosX</Form.Label>
+                    <Form.Control required type="text" value={gpsPosX} placeholder="GPS PosX" onChange={(e) => setGpsPosX(e.target.value)} style={{ marginBottom: '10px' }} />
+                    <Form.Label>GPS PosY</Form.Label>
+                    <Form.Control required type="text" value={gpsPosY} placeholder="GPS PosY" onChange={(e) => setGpsPosY(e.target.value)} style={{ marginBottom: '10px' }} />
+                    <Form.Label>Turn Radius</Form.Label>
+                    <Form.Control required type="text" value={turnRadius} placeholder="Turn Radius" onChange={(e) => setTurnRadius(e.target.value)} style={{ marginBottom: '10px' }} />
+                    <Form.Label>initX</Form.Label>
+                    <Form.Control required type="text" value={initX} placeholder="Start point X" onChange={(e) => setInitX(e.target.value)} style={{ marginBottom: '10px' }} />
+                    <Form.Label>Depth Threshold</Form.Label>
+                    <Form.Control required type="text" value={depthThreshold} placeholder="Depth threshold" onChange={(e) => setDepthThreshold(e.target.value)} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }} className="mt-4">
+                        <Button onClick={startDrive} severity="success" label="Start Drive" style={{ marginRight: '10px', marginBottom: '10px', height: '60px' }} />
+                        <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{ height: '60px' }} />
+                    </div>
+                </>
             ) : (
                 <div>
                     <Joystickv2 />

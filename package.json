@@ -47,7 +47,7 @@
     "local-ip-url": "^1.0.10",
     "moment-timezone": "^0.5.31",
     "nipplejs": "^0.10.1",
-    "primereact": "^10.5.1",
+    "primereact": "^10.8.2",
     "react": "^16.13.1",
     "react-bootstrap": "^2.10.1",
     "react-chartist": "^0.14.4",
