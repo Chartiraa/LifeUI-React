@@ -118,7 +118,16 @@ export default () => {
     }
 
     const startDrive = (data) => {
-        socket.emit("autonomousDrive", 'start')
+        socket.emit("lifeHeight", lifeHeight)
+        socket.emit("lifeWidth", lifeWidth)
+        socket.emit("gpsPosY", gpsPosY)
+        socket.emit("gpsPosX", gpsPosX)
+        socket.emit("turnRadius", turnRadius)
+        socket.emit("depth", depthThreshold)
+        socket.emit("initX", initX)
+        setTimeout(() => {
+            socket.emit("autonomousDrive", 'start')
+        }, 1000)
     }
 
     const stopDrive = () => {
