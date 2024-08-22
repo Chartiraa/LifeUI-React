@@ -76,42 +76,6 @@ export default () => {
         }
     }
 
-    useEffect(() => {
-        socket.emit("turnType", 'x,z')
-        socket.emit("speedFactor", rangeValue)
-        socket.emit("cameraSelect", 'Front Cam')
-        socket.emit("initX", initX)
-        socket.emit("depthThreshold", depthThreshold)
-    }, [])
-
-    useEffect(() => {
-        socket.emit("initX", initX)
-    }, [initX])
-
-    useEffect(() => {
-        socket.emit("depth", depthThreshold)
-    }, [depthThreshold])
-
-    useEffect(() => {
-        socket.emit("lifeHeight", lifeHeight)
-    }, [lifeHeight])
-
-    useEffect(() => {
-        socket.emit("lifeWidth", lifeWidth)
-    }, [lifeWidth])
-
-    useEffect(() => {
-        socket.emit("gpsPosY", gpsPosY)
-    }, [gpsPosY])
-
-    useEffect(() => {
-        socket.emit("gpsPosX", gpsPosX)
-    }, [gpsPosX])
-
-    useEffect(() => {
-        socket.emit("turnRadius", turnRadius)
-    }, [turnRadius])
-
     const sliderChange = (e) => {
         setRangeValue(e)
         socket.emit("speedFactor", e)
@@ -128,6 +92,10 @@ export default () => {
         setTimeout(() => {
             socket.emit("autonomousDrive", 'start')
         }, 1000)
+    }
+
+    const pauseDrive = () => {
+        socket.emit("autonomousDrive", 'pause')
     }
 
     const stopDrive = () => {
@@ -193,6 +161,7 @@ export default () => {
                         <Button onClick={startDrive} severity="success" label="Start Drive" style={{ marginRight: '10px', marginBottom: '10px', height: '60px' }} />
                         <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{ height: '60px' }} />
                     </div>
+                    <Button onClick={pauseDrive} severity="warning" label="Pause Drive" style={{ marginBottom: '10px', marginRight: '10px', width: '100%', height: '60px' }} />
                 </>
             ) : (
                 <div>
