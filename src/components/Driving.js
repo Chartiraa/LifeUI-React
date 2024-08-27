@@ -35,6 +35,14 @@ export default () => {
 
     const [depthThreshold, setDepthThreshold] = useState(50);
 
+    const [heading, setHeading] = useState(300);
+
+    const [derivative, setDerivative] = useState(15000);
+
+    const [adc, setAdc] = useState(25000);
+
+    const [gps_coord_ui, setGps_coord_ui] = useState("");
+
     const movementMods = [
         { name: 'Autonomous', value: '1' },
         { name: 'Manuel', value: '2' }
@@ -88,6 +96,9 @@ export default () => {
         socket.emit("gpsPosX", gpsPosX)
         socket.emit("turnRadius", turnRadius)
         socket.emit("depth", depthThreshold)
+        socket.emit("heading", heading)
+        socket.emit("derivative_threshold", derivative)
+        socket.emit("adc_threshold", adc)
         socket.emit("initX", initX)
         setTimeout(() => {
             socket.emit("autonomousDrive", 'start')
@@ -108,6 +119,12 @@ export default () => {
             socket.emit("plow", data * 25.5)
         }
     }
+
+    useEffect(() => {
+        socket.on("gps_coord_ui", (data) => {
+            setGps_coord_ui(data)
+        })
+    }, [])
 
     return (
         <div className="text-center" style={{ height: '100%' }}>
@@ -143,6 +160,8 @@ export default () => {
 
             {movementModStatus ? (
                 <>
+                    <Form.Label>GPS Coord</Form.Label>
+                    <Form.Control required type="text" value={gps_coord_ui} placeholder="GPS Coord" style={{ marginBottom: '10px' }} />
                     <Form.Label>Life Width</Form.Label>
                     <Form.Control required type="text" value={lifeWidth} placeholder="Life Width" onChange={(e) => setLifeWidth(e.target.value)} style={{ marginBottom: '10px' }} />
                     <Form.Label>Life Height</Form.Label>
@@ -157,6 +176,13 @@ export default () => {
                     <Form.Control required type="text" value={initX} placeholder="Start point X" onChange={(e) => setInitX(e.target.value)} style={{ marginBottom: '10px' }} />
                     <Form.Label>Depth Threshold</Form.Label>
                     <Form.Control required type="text" value={depthThreshold} placeholder="Depth threshold" onChange={(e) => setDepthThreshold(e.target.value)} />
+                    <Form.Label>Heading</Form.Label>
+                    <Form.Control required type="text" value={depthThreshold} placeholder="Heading" onChange={(e) => setHeading(e.target.value)} />
+                    <Form.Label>Derivative Treshold</Form.Label>
+                    <Form.Control required type="text" value={depthThreshold} placeholder="Derivative Threshold" onChange={(e) => setDerivative(e.target.value)} />
+                    <Form.Label>ADC Threshold</Form.Label>
+                    <Form.Control required type="text" value={depthThreshold} placeholder="ADC Threshold" onChange={(e) => setAdc(e.target.value)} />
+
                     <div style={{ display: 'flex', justifyContent: 'space-between' }} className="mt-4">
                         <Button onClick={startDrive} severity="success" label="Start Drive" style={{ marginRight: '10px', marginBottom: '10px', height: '60px' }} />
                         <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{ height: '60px' }} />

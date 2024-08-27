@@ -24,8 +24,6 @@ export default function Joystickv2() {
             setJoystickData({ x: ParseFloat(data.x, 1), y: ParseFloat(data.y, 1) })
         }
         //setJoystickData({ x: ParseFloat(data.x, 1), y: ParseFloat(data.y, 1) })
-
-
     };
 
     const handleStop = () => {
@@ -85,7 +83,6 @@ export default function Joystickv2() {
             <div style={{ justifyContent: 'center', display: 'flex', marginTop: '30px', marginBottom: '30px' }}>
                 <Joystick controlPlaneShape={lockState} size={160} baseColor="#1a1a1a" stickColor="white" move={handleMove} stop={handleStop}></Joystick>
             </div>
-
         </>
     )
 }
