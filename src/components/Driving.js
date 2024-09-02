@@ -29,9 +29,9 @@ export default () => {
 
     const [gpsPosY, setGpsPosY] = useState(40);
 
-    const [turnRadius, setTurnRadius] = useState(50);
+    const [turnRadius, setTurnRadius] = useState(140);
 
-    const [initX, setInitX] = useState(5);
+    const [initX, setInitX] = useState(230);
 
     const [depthThreshold, setDepthThreshold] = useState(50);
 
@@ -39,7 +39,7 @@ export default () => {
 
     const [derivative, setDerivative] = useState(15000);
 
-    const [adc, setAdc] = useState(25000);
+    const [adc, setAdc] = useState(520000);
 
     const [gps_coord_ui, setGps_coord_ui] = useState("");
 
@@ -177,11 +177,11 @@ export default () => {
                     <Form.Label>Depth Threshold</Form.Label>
                     <Form.Control required type="text" value={depthThreshold} placeholder="Depth threshold" onChange={(e) => setDepthThreshold(e.target.value)} />
                     <Form.Label>Heading</Form.Label>
-                    <Form.Control required type="text" value={depthThreshold} placeholder="Heading" onChange={(e) => setHeading(e.target.value)} />
+                    <Form.Control required type="text" value={heading} placeholder="Heading" onChange={(e) => setHeading(e.target.value)} />
                     <Form.Label>Derivative Treshold</Form.Label>
-                    <Form.Control required type="text" value={depthThreshold} placeholder="Derivative Threshold" onChange={(e) => setDerivative(e.target.value)} />
+                    <Form.Control required type="text" value={derivative} placeholder="Derivative Threshold" onChange={(e) => setDerivative(e.target.value)} />
                     <Form.Label>ADC Threshold</Form.Label>
-                    <Form.Control required type="text" value={depthThreshold} placeholder="ADC Threshold" onChange={(e) => setAdc(e.target.value)} />
+                    <Form.Control required type="text" value={adc} placeholder="ADC Threshold" onChange={(e) => setAdc(e.target.value)} />
 
                     <div style={{ display: 'flex', justifyContent: 'space-between' }} className="mt-4">
                         <Button onClick={startDrive} severity="success" label="Start Drive" style={{ marginRight: '10px', marginBottom: '10px', height: '60px' }} />
