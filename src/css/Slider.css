@@ -1,0 +1,69 @@
+/* Ana Slider Barının Stili */
+.slider .p-slider {
+    background-color: #f0f0f0;
+    /* Slider arka plan rengi */
+    border-radius: 12px;
+    /* Yuvarlatılmış köşeler */
+    height: 24px;
+    /* Bar yüksekliği */
+    margin: 50px 0;
+    /* Üst ve alt boşluk */
+    position: relative;
+    /* Mutlak konumlama için temel */
+}
+
+/* Slider Dolgu Barının Stili */
+.slider .p-slider-range {
+    background-color: #4CAF50;
+    /* Dolgu barın rengi */
+    height: 100%;
+    /* Tam yükseklik */
+    border-radius: 12px 0px 0px 12px;
+    /* Dolgu barın yuvarlatılmış köşeleri */
+    transition: width 0.3s ease;
+    /* Geçiş efekti */
+}
+
+/* Slider Tutamaç (Handle) Stili */
+.slider .p-slider-handle {
+    margin-top: -24px;
+
+    margin-left: -25px;
+
+    /* Tutamaç genişliği */
+    height: 46px;
+
+    width: 46px;
+    /* Tutamaç yüksekliği */
+    background-color: #ffffff;
+    /* Tutamaç rengi */
+    border: 3px solid #4CAF50;
+    /* Tutamaç kenarlık rengi */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Hafif gölge */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    /* Geçiş efekti */
+    cursor: pointer;
+    /* İşaretçi */
+}
+
+/* Tutamaç Hover ve Aktif Durumları */
+.slider .p-slider-handle:hover {
+    background-color: #4CAF50;
+    /* Hover durumunda tutamaç rengi */
+    transform: scale(1.1);
+    /* Biraz büyüme efekti */
+}
+
+.slider .p-slider-handle:active {
+    background-color: #388E3C;
+    /* Aktif durumdayken tutamaç rengi */
+    transform: scale(1.2);
+    /* Daha fazla büyüme efekti */
+}
+
+/* Slider üzerine geldiğinde bar hover efekti */
+.slider .p-slider:hover .p-slider-range {
+    background-color: #66BB6A;
+    /* Hover durumunda dolgu barın rengi */
+}

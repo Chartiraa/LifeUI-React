@@ -1,153 +1,128 @@
-
 import React, { useEffect, useState } from "react";
-import { } from '@fortawesome/free-solid-svg-icons';
-import { ButtonGroup, ToggleButton } from '@themesberg/react-bootstrap';
-import Swal from "sweetalert2"
-import Slider from 'react-rangeslider'
-import "react-rangeslider/lib/index.css"
+import { ButtonGroup } from '@themesberg/react-bootstrap';
+import Swal from "sweetalert2";
+import "react-rangeslider/lib/index.css";
 import Joystickv2 from "./Joystickv2";
-import { Button } from "primereact/button"
+import { FloatLabel } from 'primereact/floatlabel';
+import { Dropdown } from "primereact/dropdown";
+import { Button } from "primereact/button";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { socket } from "../services/socket";
 
+import "../css/Buttons.css";
+import "../css/Switch.css";
+import "../css/Dropdown.css";
 
 export default () => {
-
-    const [movementModStatus, setMovementModStatus] = useState(false)
-
+    const [movementModStatus, setMovementModStatus] = useState(false);
     const [movementMod, setMovementMod] = useState('2');
-
-    const [rangeValue, setRangeValue] = useState(20);
-
     const [plowSpeed, setPlowSpeed] = useState(0);
+    const [selectedCity, setSelectedCity] = useState("");
+    const [power, setPower] = useState(false);
+    const [value, setValue] = useState("ON");
+
+    const equipments = ["İlaçlama", "Çapalama", "Lazerle Yakma"]
+    const options = ["ON", "OFF"]
 
     const movementMods = [
-        { name: 'Autonomous', value: '1' },
-        { name: 'Manuel', value: '2' }
+        { name: 'AUTO', value: '1' },
+        { name: 'MANUEL', value: '2' },
     ];
 
     const handleChange = (e) => {
-        if (movementMod == 1 && e.currentTarget.value == '2') {
+        if (movementMod == '1' && e.currentTarget.value == '2') {
             Swal.fire({
                 icon: "warning",
-                title: "Autonomous driving mode is turned off. Do you approve?",
+                title: "Otonom sürüş modu kapatıldı. Onaylıyor musunuz?",
                 showDenyButton: true,
-                confirmButtonText: "Confirm",
-                denyButtonText: `Deny`
+                confirmButtonText: "Onayla",
+                denyButtonText: `Reddet`
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire("Switched to manual driving!", "", "success");
-                    setMovementMod('2')
-                    setMovementModStatus(false)
-                    socket.emit("autonomousState", 'Manuel')
+                    Swal.fire("Manuel sürüşe geçildi!", "", "success");
+                    setMovementMod('2');
+                    setMovementModStatus(false);
+                    socket.emit("autonomousState", 'Manuel');
                 }
             });
         }
-        else if (movementMod == 2 && e.currentTarget.value == '1') {
+        else if (movementMod == '2' && e.currentTarget.value == '1') {
             Swal.fire({
                 icon: "warning",
-                title: "Autonomous driving mode is turned on. Do you approve?",
+                title: "Otonom sürüş modu açıldı. Onaylıyor musunuz?",
                 showDenyButton: true,
-                confirmButtonText: "Confirm",
-                denyButtonText: `Deny`
+                confirmButtonText: "Onayla",
+                denyButtonText: `Reddet`
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire("Switched to autonomous driving!", "", "success");
-                    setMovementMod('1')
-                    setMovementModStatus(true)
-                    socket.emit("autonomousState", 'Autonomous')
-                    socket.emit("Joystick", { x: 0.0, y: 0.0 })
+                    Swal.fire("Otonom sürüşe geçildi!", "", "success");
+                    setMovementMod('1');
+                    setMovementModStatus(true);
+                    socket.emit("autonomousState", 'Autonomous');
+                    socket.emit("Joystick", { x: 0.0, y: 0.0 });
                 }
             });
         }
-    }
+    };
 
     useEffect(() => {
-        socket.emit("turnType", 'x,z')
-        socket.emit("speedFactor", rangeValue)
-        socket.emit("cameraSelect", 'Front Cam')
-    }, [])
+        socket.emit("turnType", 'x,z');
+        socket.emit("cameraSelect", 'Front Cam');
+    }, []);
 
-    const sliderChange = (e) => {
-        setRangeValue(e)
-        socket.emit("speedFactor", e)
-    }
 
-    const startDrive = (data) => {
-        socket.emit("autonomousDrive", 'start')
-    }
+
+    const startDrive = () => {
+        socket.emit("autonomousDrive", 'start');
+    };
 
     const stopDrive = () => {
-        socket.emit("autonomousDrive", 'stop')
-    }
+        socket.emit("autonomousDrive", 'stop');
+    };
 
     const plowController = (data) => {
         if (plowSpeed !== data) {
-            setPlowSpeed(data)
-            socket.emit("plow", data*25.5)
+            setPlowSpeed(data);
+            socket.emit("plow", data * 25.5);
         }
-    }
+    };
 
     return (
-        <div className="text-center" style={{ height: '100%' }}>
+        <>
+            <div className="text-center" style={{ height: '100%', border: '1px solid #8CA5C6', borderRadius: '5px', padding: '15px', backgroundColor: '#FFFFFF' }}>
 
-            <ButtonGroup>
-                {movementMods.map((radio, idx) => (
-                    <ToggleButton
-                        key={idx}
-                        id={`radio-${idx}`}
-                        type="radio"
-                        variant={idx % 2 ? 'outline-success' : 'outline-danger'}
-                        name="radio"
-                        value={radio.value}
-                        checked={movementMod === radio.value}
-                        onChange={handleChange}
-                    >
-                        {radio.name}
-                    </ToggleButton>
-                ))}
-            </ButtonGroup>
+                <div className="d-flex justify-content-center align-items-center">
 
-            <div className='slider mt-5 mb-5'>
-                <Slider
-                    min={0}
-                    max={100}
-                    value={rangeValue}
-                    labels={{ 0: 'Slow', 50: 'Speed Factor', 100: 'Fast' }}
-                    onChange={(e) => sliderChange(e)}
-                />
-            </div>
+                    <ButtonGroup toggle style={{ marginTop: '20px' }}>
+                        <Button label="AUTO" className={`p-button-rounded autonomous-button ${movementMod === '1' ? 'active' : ''}`} onClick={() => handleChange({ currentTarget: { value: "1" } })} />
+                        <Button label="MANUEL" className={`p-button-rounded autonomous-button ${movementMod === '2' ? 'active' : ''}`} onClick={() => handleChange({ currentTarget: { value: "2" } })} />
+                    </ButtonGroup>
+                </div >
+                <hr style={{ width: '100%', border: '1px solid #8CA5C6', marginTop: '40px', marginBottom: '40px' }}></hr>
+                {movementModStatus ? (
+                    <span>safdgdas</span>
+                ) : (
+                    <>
+                        <FloatLabel>
+                            <Dropdown showClear inputId="dd-city" value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={equipments} className="w-full dropdown" />
+                            <label style={{ fontWeight: '600' }} htmlFor="dd-city">Ekipman Seçin</label>
+                        </FloatLabel>
 
-            <hr className="border border-black border-2 mt-5"></hr>
+                        <div className="d-flex justify-content-center mt-4">
+                            <Button label="START" className="mx-1" onClick={startDrive} style={{ border: "none", backgroundColor: '#4CAF50', borderRadius: '100px 0 0 100px', boxShadow: "none" }} />
+                            <Button label="PAUSE" className="" style={{ border: "none", backgroundColor: '#F1C71F', boxShadow: "none" }} />
+                            <Button label="STOP" className="mx-1" onClick={stopDrive} style={{ border: "none", backgroundColor: '#E74C3C', borderRadius: '0 100px 100px 0', boxShadow: "none" }} />
+                        </div>
+                        <hr style={{ width: '100%', border: '1px solid #8CA5C6', marginTop: '40px', marginBottom: '40px' }}></hr>
 
-            {movementModStatus ? (
-                <div style={{ display: 'flex', justifyContent: 'space-between' }} className="mt-4">
-                    <Button onClick={startDrive} severity="success" label="Start Drive" style={{ marginRight: '10px', marginBottom: '10px', height: '60px' }} />
-                    <Button onClick={stopDrive} severity="danger" label="Stop Drive" style={{ height: '60px' }} />
-                </div>
-            ) : (
-                <div>
-                    <Joystickv2 />
-                    <div className='slider mb-5'>
-                        <label className="mt-1">Plow Arm Speed</label>
-                        <Slider
-                            min={-10}
-                            max={10}
-                            value={plowSpeed}
-                            labels={{ '-10': 'Open', 10: 'Close' }}
-                            onChange={(e) => plowController(e)}
-                            onChangeComplete={() => plowController(0)}
-                        />
-                    </div>
-                </div>
+                        <div className="mb-5 mt-3">
+                            <Joystickv2 />
+                        </div>
+                    </>
+                )
+                }
+            </div >
 
-            )}
-        </div>
+        </>
     );
 };
-
-/*            <Form.Select className="mt-4" onChange={(e) => cameraSelect(e)}>
-                <option value="Front Cam">Front Cam</option>
-                <option value="Left Cam">Left Cam</option>
-                <option value="Right Cam">Right Cam</option>
-            </Form.Select>*/

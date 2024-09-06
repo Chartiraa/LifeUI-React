@@ -1,0 +1,17 @@
+.switch {
+    scale: 1.5;
+}
+
+/* Kapalı (unchecked) durumdayken arka plan rengi */
+.switch .p-inputswitch-slider {
+    background-color: #E74C3C;
+    /* Kırmızı */
+    transition: background-color 0.3s ease;
+    /* Yumuşak geçiş efekti */
+}
+
+/* Açık (checked) durumdayken arka plan rengi */
+.switch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: #4CAF50;
+    /* Yeşil */
+}

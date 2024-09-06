@@ -48,7 +48,7 @@ export default () => {
       <Nav.Item className={navItemClassName} onClick={() => setShow(false)}>
         <Nav.Link {...linkProps} target={target} className={classNames}>
           <span>
-            <Image src={image} width={120} height={120} className="sidebar-icon svg-icon" style={{ marginLeft: '12px', marginBottom: '10px' }} />
+            <Image src={image} width={200} className="sidebar-icon svg-icon" style={{ marginLeft: '12px', marginBottom: '10px' }} />
           </span>
         </Nav.Link>
       </Nav.Item>

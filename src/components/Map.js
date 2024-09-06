@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { socket } from '../services/socket';
 
 const MapComponent = (props) => {
-
-    const { style } = props
+    const { style } = props;
 
     const [currentPosition, setCurrentPosition] = useState({ lat: 0, lng: 0 });
     const [loading, setLoading] = useState(true);
@@ -14,10 +13,15 @@ const MapComponent = (props) => {
         lng: 32.8128
     };
 
+    // Google Maps API yükleme durumu kontrolü
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: "AIzaSyCTZ0owcy1IZu2PcBw7VMbdDrioIcZkdoo",
+    });
+
     useEffect(() => {
         // Socket.IO'dan gelen GPS verilerini dinle
         socket.on('GPS', (data) => {
-            const { latitude, longitude, altitude } = data;
+            const { latitude, longitude } = data;
             setCurrentPosition({
                 lat: latitude,
                 lng: longitude
@@ -31,20 +35,20 @@ const MapComponent = (props) => {
         };
     }, []);
 
+    if (!isLoaded) {
+        return <div>Loading Map...</div>; // Harita yükleniyor göstergesi
+    }
+
     return (
-        <>
-            <LoadScript googleMapsApiKey="AIzaSyCTZ0owcy1IZu2PcBw7VMbdDrioIcZkdoo">
-                <GoogleMap
-                    mapContainerStyle={style}
-                    zoom={20}
-                    center={loading ? defaultCenter : currentPosition}
-                >
-                    {!loading && (
-                        <Marker position={currentPosition} />
-                    )}
-                </GoogleMap>
-            </LoadScript>
-        </>
+        <GoogleMap
+            mapContainerStyle={style}
+            zoom={20}
+            center={loading ? defaultCenter : currentPosition}
+        >
+            {!loading && (
+                <Marker position={currentPosition} />
+            )}
+        </GoogleMap>
     );
 };
 

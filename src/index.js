@@ -7,6 +7,8 @@ import "./scss/volt.scss";
 
 // vendor styles
 import "react-datetime/css/react-datetime.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 import HomePage from "./pages/HomePage";
 

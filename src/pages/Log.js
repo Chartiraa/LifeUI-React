@@ -1,36 +1,46 @@
 import React from "react";
-import { } from "@fortawesome/react-fontawesome";
-import { } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from '@themesberg/react-bootstrap';
-import { TemperatureWidget, HumidityWidget, BatteryWidget } from "../components/Widgets";
+import Graphs from "../components/Graphs";
+import Navbar from "../components/Navbar";
 
 
 export default () => {
 
   return (
     <>
+      <Navbar />
+      <Row style={{ display: "flex", flexDirection: "row", marginTop: "20px" }}>
+        <Col style={{ display: "flex", flexDirection: "column", marginTop: "20px", height: "88vh", marginBottom: "15px", marginRight: "20px", marginLeft: "20px", border: "1px solid #8CA5C6", borderRadius: "5px", backgroundColor: "#FFFFFF" }}>
+          <div style={{ backgroundColor: "#F5F8FB", padding: "16px", margin: "16px", textAlign: "center", fontSize: "18px" }}>
+            <label style={{ fontWeight: "bold" }}>CİHAZ VERİLERİ</label>
+          </div>
 
-      <h1 style={{ marginTop: "20px" }}>Veriler</h1>
+          <div style={{ display: "flex", width: "100%", justifyContent: "space-around", backgroundColor: "#FFFFFF", padding: "5px 10px" }}>
+            <Graphs />
+            <Graphs />
+          </div>
+          <div style={{ display: "flex", width: "100%", justifyContent: "space-around", backgroundColor: "#FFFFFF", padding: "5px 10px" }}>
+            <Graphs />
+            <Graphs />
+          </div>
 
-      <Row className="justify-content-md-center mt-4">
-        <Col xs={12} sm={6} className="mb-4">
-          <TemperatureWidget
-            title="Temperature"
-          />
         </Col>
 
-        <Col xs={12} sm={6} className="mb-4">
-          <HumidityWidget
-            title="Humidity"
-          />
+        <Col style={{ display: "flex", flexDirection: "column", marginTop: "20px", marginBottom: "15px", marginRight: "20px", border: "1px solid #8CA5C6", borderRadius: "5px", backgroundColor: "#FFFFFF" }}>
+          <div style={{ backgroundColor: "#F5F8FB", padding: "16px", margin: "16px", textAlign: "center", fontSize: "18px" }}>
+            <label style={{ fontWeight: "bold" }}>ORTAM VERİLERİ</label>
+          </div>
+
+          <div style={{ display: "flex", width: "100%", justifyContent: "space-between", backgroundColor: "#FFFFFF" }}>
+            <Graphs />
+            <Graphs />
+          </div>
+          <div style={{ display: "flex", width: "100%", justifyContent: "space-between", backgroundColor: "#FFFFFF" }}>
+            <Graphs />
+            <Graphs />
+          </div>
         </Col>
       </Row>
-
-      <Col xs={12} className="mb-4">
-        <BatteryWidget
-          title="Battery"
-        />
-      </Col>
     </>
   );
 };

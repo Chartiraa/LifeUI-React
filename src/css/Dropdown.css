@@ -1,0 +1,16 @@
+.dropdown {
+    width: 100%;
+    text-align: start;
+    border-color: #8CA5C6;
+    font-weight: 600;
+}
+
+.p-dropdown-item {
+    margin-left: -2rem;
+    font-weight: 600;
+}
+
+.p-highlight {
+    background-color: #8CA5C6;
+    color: white;
+}

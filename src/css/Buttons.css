@@ -1,0 +1,67 @@
+.mod-button {
+    background-color: white;
+    color: black;
+    box-shadow: none;
+    border-color: #8CA5C6;
+}
+
+.mod-button:first-child {
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+.mod-button:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.mod-button.active {
+    background-color: #0E2D42;
+    color: white;
+}
+
+
+.axis-button {
+    background-color: white;
+    color: black;
+    box-shadow: none;
+    border-right: 0;
+    border-color: #8CA5C6;
+}
+
+.axis-button:first-child {
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+.axis-button:last-child {
+    border-right: 1px solid #8CA5C6;
+    border-radius: 0 5px 5px 0;
+}
+
+.axis-button.active {
+    background-color: #0E2D42;
+    color: white;
+}
+
+.autonomous-button {
+    background-color: white;
+    color: black;
+    box-shadow: none;
+    border-right: 0;
+    border-color: #8CA5C6;
+    border-radius: 100px 0 0 100px;
+}
+
+.autonomous-button:last-child {
+    border-radius: 0 100px 100px 0;
+    border-right: 1px solid #8CA5C6;
+}
+
+.autonomous-button.active {
+    background-color: #0E2D42;
+    color: white;
+}
+
+.dropdown {
+    box-shadow: none;
+}
