@@ -12,6 +12,7 @@
     border: 1px solid #8CA5C6;
     border-radius: 5px;
     box-sizing: border-box;
+    background-color: white;
 }
 
 .compass-label {

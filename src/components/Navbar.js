@@ -45,7 +45,7 @@ export default () => {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", marginRight: "12px", alignItems: "center" }}>
       {/* Tarih Kısmı */}
-      <div style={{ marginTop: "20px", marginBottom: "15px", border: "1px solid #8CA5C6", borderRadius: "5px", backgroundColor: "#FFFFFF", padding: "5px 10px" }}>
+      <div style={{ marginTop: "20px", marginBottom: "15px", border: "1px solid #8CA5C6", borderRadius: "5px", backgroundColor: "#FFFFFF", padding: "11px 10px" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <FontAwesomeIcon icon={faCalendar} style={{ display: "inline", marginRight: "10px", color: "#262B40" }} />
           <label>{formattedDate}</label>
@@ -53,7 +53,7 @@ export default () => {
       </div>
 
       {/* Sensör Verileri Kısmı */}
-      <Col lg={3} style={{ marginTop: "20px", marginBottom: "15px", border: "1px solid #8CA5C6", borderRadius: "5px", backgroundColor: "#FFFFFF", padding: "5px" }}>
+      <div style={{ width: "393px", marginTop: "20px", marginBottom: "15px", border: "1px solid #8CA5C6", borderRadius: "5px", backgroundColor: "#FFFFFF", padding: "5px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           {/* Sıcaklık */}
           <div style={{ display: "flex", alignItems: "center", flex: 1, justifyContent: "center" }}>
@@ -65,7 +65,7 @@ export default () => {
 
           {/* Nem */}
           <div style={{ display: "flex", alignItems: "center", flex: 1, justifyContent: "center" }}>
-            <i class="bi bi-droplet-fill" style={{ color: "#262B40", marginRight: "12px" }} aria-hidden="true"></i>
+            <i className="bi bi-droplet-fill" style={{ color: "#262B40", marginRight: "12px" }} aria-hidden="true"></i>
             <label style={{ margin: 0, color: "black" }}>{navbarData.humidity}%</label>
           </div>
           {/* Divider */}
@@ -84,7 +84,7 @@ export default () => {
             <FontAwesomeIcon icon={faWifi} style={{ color: "#262B40", marginRight: "12px" }} />
           </div>
         </div>
-      </Col>
+      </div>
     </div>
   );
 };

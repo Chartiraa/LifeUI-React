@@ -11,12 +11,12 @@ import joystick from '../assets/img/joystick.png'
 import joystickBase from '../assets/img/joystick-base.png'
 
 export default function Joystickv2() {
+
     const [joystickAxis, setJoystickAxis] = useState(["x", "z"]);
     const [joystickData, setJoystickData] = useState({ x: 0.0, y: 0.0 });
     const [lockState, setLockState] = useState("Free");
     const [activeDriveMode, setActiveDriveMode] = useState("regular");  // Sürüş modunun state'i
     const [activeControlMode, setActiveControlMode] = useState("free"); // Kontrol butonlarının state'i
-    const [power, setPower] = useState(false);
     const [rangeValue, setRangeValue] = useState(50); // Varsayılan orta hızda
 
 
@@ -35,15 +35,6 @@ export default function Joystickv2() {
         setJoystickData({ x: 0, y: 0 });
     };
 
-    const axisSelect = (e) => {
-        setJoystickAxis(e.target.value.split(","));
-        socket.emit("turnType", e.target.value);
-    };
-
-    const lockSelect = (e) => {
-        setLockState(e.target.value);
-    };
-
     function ParseFloat(str, val) {
         str = str.toString();
         str = str.slice(0, (str.indexOf(".")) + val + 1);
@@ -58,7 +49,7 @@ export default function Joystickv2() {
             let conditions = { x: joystickData.x, z: joystickData.y };
             socket.emit("Joystick", conditions);
         } else if (joystickAxis[0] === "y" && joystickAxis[1] === "z") {
-            let conditions = { y: 0, z: joystickData.y };
+            let conditions = { y: 0, z: joystickData.x };
             socket.emit("Joystick", conditions);
         }
     }, [joystickData]);
@@ -66,11 +57,27 @@ export default function Joystickv2() {
     // Sürüş modunu değiştiren fonksiyon
     const driveMod = (mode) => {
         setActiveDriveMode(mode);
+        if (mode === "crab") {
+            setJoystickAxis(["x", "y"]);
+        } else if (mode === "regular") {
+            setJoystickAxis(["x", "z"]);
+        }
     }
 
     // Hareket kontrol modunu değiştiren fonksiyon
     const controlMode = (mode) => {
         setActiveControlMode(mode);
+        driveMod(activeDriveMode);
+        if (mode === "horizontal") {
+            setLockState("axisX");
+        } else if (mode === "vertical") {
+            setLockState("axisY");
+        } else if (mode === "center") {
+            setLockState("axisX");
+            setJoystickAxis(["y", "z"]);
+        } else if (mode === "free") {
+            setLockState("Free");
+        }
     }
 
     return (
@@ -114,7 +121,7 @@ export default function Joystickv2() {
             </ButtonGroup>
 
             <div className='slider mb-5'>
-                <Slider className={`slider ${power ? 'p-inputswitch-checked' : ''}`} value={rangeValue} max="100" min="0" onChange={(e) => sliderChange(e.value)} />
+                <Slider className={`slider`} value={rangeValue} max="100" min="0" onChange={(e) => sliderChange(e.value)} />
             </div>
 
             <div style={{ justifyContent: 'center', display: 'flex', marginTop: '30px', marginBottom: '30px' }}>

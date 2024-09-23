@@ -14,15 +14,14 @@ import "../css/Switch.css";
 import "../css/Dropdown.css";
 
 export default () => {
+
     const [movementModStatus, setMovementModStatus] = useState(false);
+
     const [movementMod, setMovementMod] = useState('2');
-    const [plowSpeed, setPlowSpeed] = useState(0);
-    const [selectedCity, setSelectedCity] = useState("");
-    const [power, setPower] = useState(false);
-    const [value, setValue] = useState("ON");
+
+    const [selectedEquipment, setSelectedEquipment] = useState("");
 
     const equipments = ["İlaçlama", "Çapalama", "Lazerle Yakma"]
-    const options = ["ON", "OFF"]
 
     const movementMods = [
         { name: 'AUTO', value: '1' },
@@ -65,26 +64,13 @@ export default () => {
         }
     };
 
-    useEffect(() => {
-        socket.emit("turnType", 'x,z');
-        socket.emit("cameraSelect", 'Front Cam');
-    }, []);
-
-
-
-    const startDrive = () => {
-        socket.emit("autonomousDrive", 'start');
+    const driveController = (value) => {
+        socket.emit("autonomousDrive", value);
     };
 
-    const stopDrive = () => {
-        socket.emit("autonomousDrive", 'stop');
-    };
-
-    const plowController = (data) => {
-        if (plowSpeed !== data) {
-            setPlowSpeed(data);
-            socket.emit("plow", data * 25.5);
-        }
+    const onEquipmentSelect = (e) => {
+        setSelectedEquipment(e);
+        socket.emit("selectedEquipment", e);
     };
 
     return (
@@ -93,7 +79,7 @@ export default () => {
 
                 <div className="d-flex justify-content-center align-items-center">
 
-                    <ButtonGroup toggle style={{ marginTop: '20px' }}>
+                    <ButtonGroup style={{ marginTop: '20px' }}>
                         <Button label="AUTO" className={`p-button-rounded autonomous-button ${movementMod === '1' ? 'active' : ''}`} onClick={() => handleChange({ currentTarget: { value: "1" } })} />
                         <Button label="MANUEL" className={`p-button-rounded autonomous-button ${movementMod === '2' ? 'active' : ''}`} onClick={() => handleChange({ currentTarget: { value: "2" } })} />
                     </ButtonGroup>
@@ -104,14 +90,14 @@ export default () => {
                 ) : (
                     <>
                         <FloatLabel>
-                            <Dropdown showClear inputId="dd-city" value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={equipments} className="w-full dropdown" />
-                            <label style={{ fontWeight: '600' }} htmlFor="dd-city">Ekipman Seçin</label>
+                            <Dropdown showClear inputId="equipment" value={selectedEquipment} onChange={(e) => onEquipmentSelect(e.value)} options={equipments} className="w-full dropdown" />
+                            <label style={{ fontWeight: '600' }} htmlFor="equipment">Ekipman Seçin</label>
                         </FloatLabel>
 
                         <div className="d-flex justify-content-center mt-4">
-                            <Button label="START" className="mx-1" onClick={startDrive} style={{ border: "none", backgroundColor: '#4CAF50', borderRadius: '100px 0 0 100px', boxShadow: "none" }} />
-                            <Button label="PAUSE" className="" style={{ border: "none", backgroundColor: '#F1C71F', boxShadow: "none" }} />
-                            <Button label="STOP" className="mx-1" onClick={stopDrive} style={{ border: "none", backgroundColor: '#E74C3C', borderRadius: '0 100px 100px 0', boxShadow: "none" }} />
+                            <Button label="START" className="mx-1" onClick={() => driveController("start")} style={{ border: "none", backgroundColor: '#4CAF50', borderRadius: '100px 0 0 100px', boxShadow: "none" }} />
+                            <Button label="PAUSE" className="" onClick={() => driveController("pause")} style={{ border: "none", backgroundColor: '#F1C71F', boxShadow: "none" }} />
+                            <Button label="STOP" className="mx-1" onClick={() => driveController("stop")} style={{ border: "none", backgroundColor: '#E74C3C', borderRadius: '0 100px 100px 0', boxShadow: "none" }} />
                         </div>
                         <hr style={{ width: '100%', border: '1px solid #8CA5C6', marginTop: '40px', marginBottom: '40px' }}></hr>
 

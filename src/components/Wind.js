@@ -5,7 +5,7 @@ import '../css/Wind.css'; // Stil dosyası
 
 const WindDirection = () => {
     const [windSpeed, setWindSpeed] = useState(100); // Varsayılan hız
-    const [windDirection, setWindDirection] = useState(90); // Varsayılan yön
+    const [windDirection, setWindDirection] = useState(230); // Varsayılan yön
 
     useEffect(() => {
         const handleOrientation = (event) => {

@@ -7,7 +7,7 @@ import Driving from "../components/Driving";
 import Map from "../components/Map";
 import VideoStream from "../components/CameraRTC";
 import kamera1 from "../assets/img/Kamera 1.webp";
-import LineChart from "../components/Graphs";
+import { LineChart, PieChart } from "../components/Graphs";
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
@@ -120,14 +120,14 @@ export default () => {
           <div className="drag-handle" style={{ position: 'absolute', top: 10, right: 15, cursor: 'move', zIndex: 10 }}>
             <i className="bi bi-arrows-move"></i>
           </div>
-          <LineChart />
+          <LineChart label="Sıcaklık" graphLabel="Sıcaklık" icon="bi-thermometer-half" lineColor="#ff5733" />
         </div>
 
         <div key="comp6" className="component-box">
           <div className="drag-handle" style={{ position: 'absolute', top: 10, right: 15, cursor: 'move', zIndex: 10 }}>
             <i className="bi bi-arrows-move"></i>
           </div>
-          <LineChart />
+          <LineChart label="Sıvı" graphLabel="Sıvı Seviyesi" icon="bi-droplet-fill" lineColor="#336bff" />
         </div>
 
         <div key="comp4" className="component-box">
@@ -148,7 +148,7 @@ export default () => {
           <div className="drag-handle" style={{ position: 'absolute', top: 10, right: 15, cursor: 'move', zIndex: 10 }}>
             <i className="bi bi-arrows-move"></i>
           </div>
-          <Map style={{ height: "100%", width: "100%" }} />
+          <Map style={{ height: "100%", width: "100%" }} showPolygon={false} />
         </div>
 
       </ResponsiveGridLayout>

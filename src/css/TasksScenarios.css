@@ -1,0 +1,237 @@
+.tasksScenariosContainer {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.tasksContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #8CA5C6;
+    height: 90vh;
+    background-color: white;
+}
+
+.tasksSettingsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #8CA5C6;
+    background-color: white;
+}
+
+.scenarioSettingsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #8CA5C6;
+    background-color: white;
+}
+
+.scenarioContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #8CA5C6;
+    background-color: white;
+}
+
+.defaultTasksContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.registeredTasksContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid #8CA5C6;
+    border-radius: 5px;
+    padding: 10px 20px 10px 20px;
+    text-align: center;
+    background-color: #1E2430;
+    color: white;
+    margin-bottom: 18px;
+}
+
+.tripledotContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* Menü sağ tarafa hizalanır */
+}
+
+.button {
+    margin: 2px;
+    background-color: white;
+    color: black;
+    box-shadow: none;
+    border-color: #8CA5C6;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.newScenarioButton {
+    margin-bottom: 10px;
+    background-color: white;
+    box-shadow: none;
+    border-color: #1E2430;
+    border-radius: 5px;
+    width: 100%;
+    color: black;
+}
+
+.submitButton {
+    background-color: #1E2430;
+    box-shadow: none;
+    border-color: #8CA5C6;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.saveButton {
+    margin-right: 10px;
+}
+
+.tripledot {
+    background-color: #1E2430;
+    border: none;
+    box-shadow: none;
+}
+
+.tripledotDropdown {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.openModalButton {
+    background-color: #1E2430;
+    box-shadow: none;
+    border-color: #8CA5C6;
+    border-radius: 5px;
+    width: 65%;
+    margin-bottom: 18px;
+}
+
+.label {
+    border: 1px solid #8CA5C6;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    background-color: #1E2430;
+    color: white;
+    margin-bottom: 18px;
+}
+
+.inputLabel {
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+}
+
+.headerLabel {
+    flex: 1;
+    /* Label'in genişliğini ayarlar */
+    text-align: center;
+}
+
+.dropdown {
+    width: 80%;
+}
+
+.buttonGroup {
+    width: 65%;
+    /* Buton grubu genişliğini %100 yap */
+}
+
+.switchButton {
+    flex: 1;
+    /* Eşit genişlikte butonlar */
+    box-shadow: none;
+    background-color: white;
+    color: black;
+    border-radius: 5px 0 0 5px;
+    border-color: #1E2430;
+}
+
+.switchButton:last-child {
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+}
+
+.active {
+    background-color: #1E2430;
+    color: white;
+}
+
+.inputGroup {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.selected {
+    background-color: #7E95B2;
+    color: white;
+}
+
+.unvisible {
+    display: none;
+}
+
+.dragging {
+    background-color: #e0e0e0;
+    opacity: 0.8;
+    border: 2px dashed #333;
+}
+
+.draggable-task {
+    margin-bottom: 10px;
+    /* Örneğin 10px margin verelim */
+}
+
+.custom-modal-dialog {
+    max-width: 80vw;
+    /* Ekranın %80 genişliğinde */
+    width: 80vw;
+    /* Ekranın %80 genişliğinde */
+    max-height: 45vw;
+    /* 16:9 oranı sağlamak için ekran genişliğinin %45 yüksekliği */
+    height: 45vw;
+    /* 16:9 oranı sağlamak için ekran genişliğinin %45 yüksekliği */
+}

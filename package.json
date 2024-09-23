@@ -44,12 +44,16 @@
     "chartist-plugin-tooltips-updated": "^0.1.4",
     "craco-alias": "^3.0.1",
     "device": "^0.3.12",
+    "firebase": "^10.13.1",
     "lit": "^3.2.0",
     "local-ip-url": "^1.0.10",
     "moment-timezone": "^0.5.31",
+    "nanoid": "^5.0.7",
     "nipplejs": "^0.10.1",
+    "primeicons": "^7.0.0",
     "primereact": "^10.5.1",
     "react": "^16.13.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.10.1",
     "react-chartist": "^0.14.4",
     "react-chartjs-2": "^5.2.0",
@@ -73,7 +77,7 @@
     "simple-peer": "^9.11.1",
     "simplebar-react": "^2.3.0",
     "socket.io-client": "^4.7.5",
-    "sweetalert2": "^11.6.13"
+    "sweetalert2": "^11.14.0"
   },
   "scripts": {
     "start": "craco --openssl-legacy-provider start",

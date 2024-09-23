@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faChartPie, faCog, faMapMarked, faDatabase, faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationTriangle, faChartPie, faCog, faMapMarked, faDatabase, faCamera, faTable } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ export default () => {
 
     return (
       <Nav.Item className={navItemClassName} onClick={() => setShow(false)}>
-        <Nav.Link {...linkProps} target={target} style={{ display: 'flex', justifyContent: 'space-between' }} >
+        <Nav.Link {...linkProps} target={target} style={{ display: 'flex', justifyContent: 'space-between', border: 'none' }} >
           <span>
             {icon ? <span className="sidebar-icon"><FontAwesomeIcon icon={icon} /> </span> : null}
             <p style={{ display: 'inline', fontSize: "1.3rem" }}>{title}</p>
@@ -46,7 +46,7 @@ export default () => {
 
     return (
       <Nav.Item className={navItemClassName} onClick={() => setShow(false)}>
-        <Nav.Link {...linkProps} target={target} className={classNames}>
+        <Nav.Link {...linkProps} target={target} className={classNames} style={{ border: 'none' }}>
           <span>
             <Image src={image} width={200} className="sidebar-icon svg-icon" style={{ marginLeft: '12px', marginBottom: '10px' }} />
           </span>
@@ -67,7 +67,7 @@ export default () => {
       </Navbar>
       <CSSTransition timeout={300} in={show} classNames="sidebar-transition">
         <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`}>
-          <div className="sidebar-inner px-4 pt-3">
+          <div className="sidebar-inner px-1 pt-3">
             <Nav className="flex-column pt-3 pt-md-0">
               <LogoNavItem title="TatekBOT" link={Routes.DashboardOverview} image={Logo} />
 
@@ -76,6 +76,8 @@ export default () => {
               <NavItem title="Kontrol Paneli" link={Routes.DashboardOverview.path} icon={faChartPie} />
               <NavItem title="Kameralar" icon={faCamera} link={Routes.Cameras.path} />
               <NavItem title="Veriler" icon={faDatabase} link={Routes.Log.path} />
+              <NavItem title="Araziler" icon={faTable} link={Routes.Lands.path} />
+              <NavItem title="Görev ve Senaryolar" icon={faTable} link={Routes.TasksScenarios.path} />
               <NavItem title="Harita" icon={faMapMarked} link={Routes.Mapping.path} />
               <NavItem title="Ayarlar" icon={faCog} link={Routes.Settings.path} />
 

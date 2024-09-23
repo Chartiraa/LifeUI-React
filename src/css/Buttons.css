@@ -65,3 +65,23 @@
 .dropdown {
     box-shadow: none;
 }
+
+.land-button {
+    background-color: white;
+    color: black;
+    box-shadow: none;
+    border-right: 0;
+    border-color: #8CA5C6;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+}
+
+.land-button:last-child {
+    border-radius: 0 5px 5px 0;
+    border-right: 1px solid #8CA5C6;
+}
+
+.land-button.active {
+    background-color: #0E2D42;
+    color: white;
+}

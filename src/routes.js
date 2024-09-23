@@ -1,3 +1,4 @@
+import TasksScenarios from "./pages/TasksScenarios";
 
 export const Routes = {
     // pages
@@ -5,6 +6,8 @@ export const Routes = {
     DashboardOverview: { path: "/" },
     Cameras: { path: "/cameras" },
     Log: { path: "/log" },
+    Lands: { path: "/lands" },
+    TasksScenarios: { path: "/tasksscenarios" },
     Settings: { path: "/settings" },
     Mapping: { path: "/mapping" },
     Upgrade: { path: "/upgrade" },
@@ -16,7 +19,6 @@ export const Routes = {
     ServerError: { path: "/examples/500" },
 
     // components
-    Accordions: { path: "/components/accordions" },
     Alerts: { path: "/components/alerts" },
     Badges: { path: "/components/badges" },
     Widgets: { path: "/widgets" },
