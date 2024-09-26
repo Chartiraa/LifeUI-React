@@ -19,13 +19,15 @@ export default () => {
 
   const [rowHeight, setRowHeight] = useState(100);  // Varsayılan bir değer
 
+  const [coords, setCoords] = useState([]);
+
   const [layouts, setLayouts] = useState({
     lg: [
-      { i: 'comp1', x: 0, y: 1, w: 5, h: 3, minW: 2, maxW: 5, minH: 2, maxH: 4 },
-      { i: 'comp7', x: 0, y: 4, w: 5, h: 3, minW: 2, maxW: 5, minH: 2, maxH: 4 },
+      { i: 'comp1', x: 0, y: 1, w: 5, h: 3, minW: 5, maxW: 5, minH: 2, maxH: 4 },
+      { i: 'comp7', x: 0, y: 4, w: 5, h: 3, minW: 5, maxW: 5, minH: 2, maxH: 4 },
       { i: 'comp2', x: 5, y: 3, w: 2, h: 2, minW: 2, maxW: 2, minH: 2, maxH: 2 },
-      { i: 'comp3', x: 5, y: 1, w: 4, h: 2, minW: 2, maxW: 3, minH: 2, maxH: 3 },
-      { i: 'comp6', x: 5, y: 5, w: 4, h: 2, minW: 2, maxW: 3, minH: 2, maxH: 3 },
+      { i: 'comp3', x: 5, y: 1, w: 4, h: 2, minW: 4, maxW: 4, minH: 2, maxH: 3 },
+      { i: 'comp6', x: 5, y: 5, w: 4, h: 2, minW: 4, maxW: 4, minH: 2, maxH: 3 },
       { i: 'comp4', x: 7, y: 3, w: 2, h: 2, minW: 2, maxW: 2, minH: 2, maxH: 2 },
       { i: 'comp5', x: 9, y: 1, w: 3, h: 6, minW: 3, maxW: 3, minH: 6, maxH: 6 },
       // Daha fazla komponent ekleyebilirsiniz...
@@ -45,43 +47,47 @@ export default () => {
   });
 
   useEffect(() => {
-    console.log(window.innerHeight);
-    // Navbar yüksekliğini hesaplayarak rowHeight'ı ayarlama
     const calculateRowHeight = () => {
-      const navbarHeight = 83
-      const availableHeight = window.innerHeight - navbarHeight;  // Kullanılabilir yükseklik
-      const rowCount = 6;  // Satır sayısı
+      const navbarHeight = 83;
+      const availableHeight = window.innerHeight - navbarHeight;
+      const newRowHeight = availableHeight / 6;
 
-      // Satır yüksekliğini, kalan alanı 6'ya bölerek hesapla
-      const newRowHeight = availableHeight / rowCount;
-      setRowHeight(newRowHeight);  // Dinamik rowHeight hesaplama
+      if (newRowHeight !== rowHeight) {
+        setRowHeight(newRowHeight);
+      }
     };
 
-    // Yüksekliği hesapla ve pencere boyutu değiştiğinde yeniden hesapla
     calculateRowHeight();
     window.addEventListener('resize', calculateRowHeight);
 
-    return () => window.removeEventListener('resize', calculateRowHeight);  // Cleanup on unmount
-  }, []);
+    return () => window.removeEventListener('resize', calculateRowHeight);
+  }, [rowHeight]);  // `rowHeight` değiştiğinde sadece yeniden render et
+
 
   const ResponsiveGridLayout = WidthProvider(Responsive);
 
   const handleResizeStop = (layout) => validateLayout(layout);
 
   const validateLayout = (newLayout) => {
-    const totalRows = newLayout.reduce((max, item) => Math.max(max, item.y + item.h), 0);
+    const hasLayoutChanged = newLayout.some((item, index) => {
+      return (
+        item.x !== layouts.lg[index]?.x ||
+        item.y !== layouts.lg[index]?.y ||
+        item.w !== layouts.lg[index]?.w ||
+        item.h !== layouts.lg[index]?.h
+      );
+    });
 
-    if (totalRows > 6) {
-      alert("Düzenleme sınırı aşıyor. Toplamda 6 satırdan fazla olamaz.");
-      setLayouts(prevLayouts => ({ ...prevLayouts }));
-    } else {
-      setLayouts(prevLayouts => {
-        if (JSON.stringify(prevLayouts.lg) !== JSON.stringify(newLayout)) {
-          return { ...prevLayouts, lg: newLayout };
-        }
-        return prevLayouts;
-      });
+    if (hasLayoutChanged) {
+      setLayouts(prevLayouts => ({ ...prevLayouts, lg: newLayout }));
     }
+  };
+
+  console.log("renderedildi");
+
+
+  const handleLocationSelect = (location) => {
+    console.log("Seçilen konum:", location);
   };
 
   return (
@@ -148,7 +154,7 @@ export default () => {
           <div className="drag-handle" style={{ position: 'absolute', top: 10, right: 15, cursor: 'move', zIndex: 10 }}>
             <i className="bi bi-arrows-move"></i>
           </div>
-          <Map style={{ height: "100%", width: "100%" }} showPolygon={false} />
+          {/*<Map style={{ height: "43vh", width: "100%" }} onLocationSelect={handleLocationSelect} coords={coords} setCoords={setCoords} />*/}
         </div>
 
       </ResponsiveGridLayout>

@@ -17,6 +17,7 @@ import "../css/TasksScenarios.css";
 import Swal from "sweetalert2";
 
 export default function TasksScenarios() {
+    const [coords, setCoords] = useState([]);
     const [refresh, setRefresh] = useState(0);
     const [selectedTask, setSelectedTask] = useState(null);
     const [selectedTaskId, setSelectedTaskId] = useState(null);
@@ -441,7 +442,7 @@ export default function TasksScenarios() {
                     <Modal.Title>Harita</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <MapComponent style={{ height: "70vh", width: "100%" }} onLocationSelect={handleLocationSelect} />
+                    <MapComponent style={{ height: "70vh", width: "100%" }} onLocationSelect={handleLocationSelect} showLocation={true} coords={coords} setCoords={setCoords} />
                 </Modal.Body>
                 <Modal.Footer>
                     <div className="d-flex align-items-center justify-content-between w-100">

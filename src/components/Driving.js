@@ -9,17 +9,30 @@ import { Button } from "primereact/button";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { socket } from "../services/socket";
 
+import { getSortedTasks, fetchScenarios } from "../utils/taskFunctions";
+
 import "../css/Buttons.css";
 import "../css/Switch.css";
 import "../css/Dropdown.css";
 
 export default () => {
 
-    const [movementModStatus, setMovementModStatus] = useState(false);
+    const [movementModStatus, setMovementModStatus] = useState(true);
 
-    const [movementMod, setMovementMod] = useState('2');
+    const [movementMod, setMovementMod] = useState('1');
 
-    const [selectedEquipment, setSelectedEquipment] = useState("");
+    const [taskorscenario, setTaskorscenario] = useState('1');
+
+    const [tasks, setTasks] = useState([]);
+    const [tasksName, setTasksName] = useState([]);
+
+    const [refresh, setRefresh] = useState(0);
+
+    const [loading, setLoading] = useState(true);
+
+    const [savedScenarios, setSavedScenarios] = useState([]);
+
+    const [selectedTask, setSelectedTask] = useState("");
 
     const equipments = ["İlaçlama", "Çapalama", "Lazerle Yakma"]
 
@@ -27,6 +40,38 @@ export default () => {
         { name: 'AUTO', value: '1' },
         { name: 'MANUEL', value: '2' },
     ];
+
+    const taskorscenarioOptions = [
+        { name: 'Görev', value: '1' },
+        { name: 'Senaryo', value: '2' },
+    ];
+
+    useEffect(() => {
+        const fetchTasks = async () => {
+            const sortedTasks = await getSortedTasks();
+            setTasks(sortedTasks);
+            setTasksName(sortedTasks.map(task => task.taskName));
+        };
+
+        fetchTasks();
+    }, [refresh]);
+
+    useEffect(() => {
+        const loadScenarios = async () => {
+            try {
+                setLoading(true);
+                const scenarios = await fetchScenarios();
+                setSavedScenarios(scenarios.map(scenario => scenario.scenarioName) || []); // Eğer gelen veri yoksa boş bir dizi ayarlayın
+            } catch (error) {
+                console.error("Senaryolar yüklenirken hata oluştu:", error);
+                setSavedScenarios([]); // Hata durumunda boş bir dizi ayarlayın
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadScenarios();
+    }, [refresh]);
 
     const handleChange = (e) => {
         if (movementMod == '1' && e.currentTarget.value == '2') {
@@ -69,9 +114,75 @@ export default () => {
     };
 
     const onEquipmentSelect = (e) => {
-        setSelectedEquipment(e);
+        setSelectedTask(e);
+        console.log(e)
         socket.emit("selectedEquipment", e);
+        tasks.map(task => {
+            if (task.taskName == e) {
+                console.log(task)
+            }
+        })
     };
+
+    const TaskInfo = () => {
+        let taskName, taskType = ""
+        let arrivingMethod, moveType = ""
+        let appType, dosage, plant, plantType = ""
+
+        tasks.map(task => {
+            if (task.taskName == selectedTask) {
+                taskType = task.taskType
+            }
+        })
+
+        if (taskType == "GoLocation") {
+            tasks.map(task => {
+                if (task.taskName == selectedTask) {
+                    taskName = task.taskName
+                    taskType = task.taskType
+                    arrivingMethod = task.taskParams.arrivingMethod
+                    moveType = task.taskParams.moveType
+                    console.log(taskName, taskType, arrivingMethod, moveType)
+                }
+            })
+        } else if (taskType == "Spray") {
+            tasks.map(task => {
+                if (task.taskName == selectedTask) {
+                    taskName = task.taskName
+                    taskType = task.taskType
+                    plant = task.taskParams.plant
+                    plantType = task.taskParams.plantType
+                    appType = task.taskParams.appType
+                    dosage = task.taskParams.dosage
+                    console.log(taskName, taskType, arrivingMethod)
+                }
+            })
+        }
+
+        return (
+            <>
+                <p>{"Görev Türü:" + taskType}</p>
+                <p>{"Görev Adı:" + taskName}</p>
+                {taskType == "Spray" ? (
+                    <>
+                        <p>{"Bitki:" + plant}</p>
+                        <p>{"Bitki Türü:" + plantType}</p>
+                        <p>{"Uygulama:" + appType}</p>
+                        <p>{"Dozaj:" + dosage}</p>
+                    </>
+
+                ) : taskType == "GoLocation" ? (
+                    <>
+                        <p>{"Görev Tipi:" + moveType}</p>
+                        <p>{"Gidiş Türü:" + arrivingMethod}</p>
+                    </>
+                ) : (
+                    null
+                )}
+
+            </>
+        )
+    }
 
     return (
         <>
@@ -86,11 +197,36 @@ export default () => {
                 </div >
                 <hr style={{ width: '100%', border: '1px solid #8CA5C6', marginTop: '40px', marginBottom: '40px' }}></hr>
                 {movementModStatus ? (
-                    <span>safdgdas</span>
+                    <>
+                        <ButtonGroup style={{ marginBottom: '30px' }}>
+                            <Button label="Görev" className={`p-button-rounded autonomous-button ${taskorscenario === '1' ? 'active' : ''}`} onClick={() => setTaskorscenario('1')} />
+                            <Button label="Senaryo" className={`p-button-rounded autonomous-button ${taskorscenario === '2' ? 'active' : ''}`} onClick={() => setTaskorscenario('2')} />
+                        </ButtonGroup>
+                        {taskorscenario === '1' ? (
+                            <FloatLabel>
+                                <Dropdown showClear inputId="equipment" value={selectedTask} onChange={(e) => onEquipmentSelect(e.value)} options={tasksName} className="w-full dropdown" />
+                                <label style={{ fontWeight: '600' }} htmlFor="equipment">Görev Seçin</label>
+                            </FloatLabel>
+                        ) : (
+                            <FloatLabel>
+                                <Dropdown showClear inputId="equipment" value={selectedTask} onChange={(e) => onEquipmentSelect(e.value)} options={savedScenarios} className="w-full dropdown" />
+                                <label style={{ fontWeight: '600' }} htmlFor="equipment">Senaryo Seçin</label>
+                            </FloatLabel>
+                        )}
+                        {selectedTask && taskorscenario === '1' && (
+                            <TaskInfo />
+                        )}
+
+                        <div className="d-flex justify-content-center mt-5">
+                            <Button label="START" className="mx-1" onClick={() => driveController("start")} style={{ border: "none", backgroundColor: '#4CAF50', borderRadius: '100px 0 0 100px', boxShadow: "none" }} />
+                            <Button label="PAUSE" className="" onClick={() => driveController("pause")} style={{ border: "none", backgroundColor: '#F1C71F', boxShadow: "none" }} />
+                            <Button label="STOP" className="mx-1" onClick={() => driveController("stop")} style={{ border: "none", backgroundColor: '#E74C3C', borderRadius: '0 100px 100px 0', boxShadow: "none" }} />
+                        </div>
+                    </>
                 ) : (
                     <>
                         <FloatLabel>
-                            <Dropdown showClear inputId="equipment" value={selectedEquipment} onChange={(e) => onEquipmentSelect(e.value)} options={equipments} className="w-full dropdown" />
+                            <Dropdown showClear inputId="equipment" value={selectedTask} onChange={(e) => onEquipmentSelect(e.value)} options={equipments} className="w-full dropdown" />
                             <label style={{ fontWeight: '600' }} htmlFor="equipment">Ekipman Seçin</label>
                         </FloatLabel>
 
