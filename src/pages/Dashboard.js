@@ -4,10 +4,12 @@ import Navbar from "../components/Navbar";
 import CompassComponent from "../components/CompassComp";
 import WindDirection from "../components/Wind";
 import Driving from "../components/Driving";
-import Map from "../components/Map";
+import MapforDashboard from "../components/MapforDashboard";
 import VideoStream from "../components/CameraRTC";
+import CameraFeed from "../components/CameraZMQ";
 import kamera1 from "../assets/img/Kamera 1.webp";
 import { LineChart, PieChart } from "../components/Graphs";
+import { socket } from "../services/socket";
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
@@ -112,7 +114,7 @@ export default () => {
           <div className="drag-handle" style={{ position: 'absolute', top: 10, right: 15, cursor: 'move', zIndex: 10, color: 'white' }}>
             <i className="bi bi-arrows-move"></i>
           </div>
-          <img style={{ height: "100%", width: "100%", borderRadius: "5px" }} src={kamera1} />
+          <CameraFeed port={5555} />
         </div>
 
         <div key="comp2" className="component-box">
@@ -154,7 +156,7 @@ export default () => {
           <div className="drag-handle" style={{ position: 'absolute', top: 10, right: 15, cursor: 'move', zIndex: 10 }}>
             <i className="bi bi-arrows-move"></i>
           </div>
-          {/*<Map style={{ height: "43vh", width: "100%" }} onLocationSelect={handleLocationSelect} coords={coords} setCoords={setCoords} />*/}
+          <CameraFeed port={5556} />
         </div>
 
       </ResponsiveGridLayout>

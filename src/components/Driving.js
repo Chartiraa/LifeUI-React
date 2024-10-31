@@ -47,31 +47,50 @@ export default () => {
     ];
 
     useEffect(() => {
+        let isMounted = true; // Bileşenin bağlı olup olmadığını takip eden değişken
         const fetchTasks = async () => {
             const sortedTasks = await getSortedTasks();
-            setTasks(sortedTasks);
-            setTasksName(sortedTasks.map(task => task.taskName));
+            if (isMounted) { // Bileşen bağlıysa güncelleme yap
+                setTasks(sortedTasks);
+                setTasksName(sortedTasks.map(task => task.taskName));
+            }
         };
-
+    
         fetchTasks();
+    
+        return () => {
+            isMounted = false; // Bileşen unmount olduğunda bağlılık durumunu false yap
+        };
     }, [refresh]);
-
+    
     useEffect(() => {
+        let isMounted = true;
         const loadScenarios = async () => {
             try {
                 setLoading(true);
                 const scenarios = await fetchScenarios();
-                setSavedScenarios(scenarios.map(scenario => scenario.scenarioName) || []); // Eğer gelen veri yoksa boş bir dizi ayarlayın
+                if (isMounted) {
+                    setSavedScenarios(scenarios.map(scenario => scenario.scenarioName) || []);
+                }
             } catch (error) {
                 console.error("Senaryolar yüklenirken hata oluştu:", error);
-                setSavedScenarios([]); // Hata durumunda boş bir dizi ayarlayın
+                if (isMounted) {
+                    setSavedScenarios([]);
+                }
             } finally {
-                setLoading(false);
+                if (isMounted) {
+                    setLoading(false);
+                }
             }
         };
-
+    
         loadScenarios();
+    
+        return () => {
+            isMounted = false;
+        };
     }, [refresh]);
+    
 
     const handleChange = (e) => {
         if (movementMod == '1' && e.currentTarget.value == '2') {
