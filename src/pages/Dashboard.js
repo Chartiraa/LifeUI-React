@@ -114,7 +114,7 @@ export default () => {
           <div className="drag-handle" style={{ position: 'absolute', top: 10, right: 15, cursor: 'move', zIndex: 10, color: 'white' }}>
             <i className="bi bi-arrows-move"></i>
           </div>
-          <CameraFeed port={5555} />
+          <CameraFeed feedType="camera" />
         </div>
 
         <div key="comp2" className="component-box">
@@ -156,7 +156,7 @@ export default () => {
           <div className="drag-handle" style={{ position: 'absolute', top: 10, right: 15, cursor: 'move', zIndex: 10 }}>
             <i className="bi bi-arrows-move"></i>
           </div>
-          <CameraFeed port={5556} />
+          <CameraFeed feedType="processed" />
         </div>
 
       </ResponsiveGridLayout>
